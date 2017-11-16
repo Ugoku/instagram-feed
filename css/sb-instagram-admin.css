@@ -17,8 +17,6 @@
 	background: #f9f9f9;
 	background: rgba(255,255,255,0.8);
 	
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
 #sbi_admin .sbi_more_info p{
@@ -55,22 +53,14 @@
 	color: #e9eef3;
 	text-decoration: none;
 
-	-moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   border-radius: 5px;
 
-  -moz-transition: all 0.5s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
 #sbi_admin .sbi_admin_btn:hover{
 	background-color: #3880c4;
 	color: #fff;
 
-	-moz-transition: all 0.1s ease-in-out;
-  -webkit-transition: all 0.1s ease-in-out;
-  -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
 .sb_get_token .submit {
@@ -85,8 +75,6 @@
      background: #68a30b;
      color: #fff;
      font-size: 16px;
-     padding: 6px;
-     font-size: 13px;
      text-transform: capitalize;
      padding: 4px 8px 5px 8px;
      margin-left: 5px;
@@ -121,11 +109,8 @@
 	width: 70px;
 	padding-top: 5px;
 
-	display: -moz-inline-stack;
 	display: inline-block;
 	vertical-align: top;
-	zoom: 1;
-	*display: inline;
 }
 
 /* Config info */
@@ -144,22 +129,16 @@
 	background: #fff;
 	border: 1px solid #ddd;
 
-	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
 	box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
 
-	-moz-border-radius: 2px;
-  	-webkit-border-radius: 2px;
   	border-radius: 2px;
 }
 
 /* License */
 #sbi_admin .sbi_license_status{
-	display: -moz-inline-stack;
 	display: inline-block;
 	vertical-align: top;
-	zoom: 1;
-	*display: inline;
-	
+
 	padding: 5px;
 }
 
@@ -218,8 +197,8 @@
 #sbi_admin .sbi_shortcode_symbol{
 	position: absolute;
 	right: -24px;
-	bottom: 0px;
-  padding: 2px 4px 3px 3px;
+	bottom: 0;
+    padding: 2px 4px 3px 3px;
 	width: auto;
 	font-size: 11px;
 	margin-left: 5px;
@@ -238,8 +217,6 @@
     background: #eee;
     background: rgba(255,255,255,0.5);
 
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
 }
 #sbi_admin .sbi_quickstart h3,
@@ -256,8 +233,6 @@
 	border: 1px solid #e89a2e;
 	color: #cf6100;
 
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
 #sbi_admin .sbi_notice a{
@@ -281,8 +256,6 @@
 	border: 1px solid #BA7B7B;
 	color: #592626;
 
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
 
@@ -297,8 +270,6 @@
 	border: 1px solid #BA7B7B;
 	color: #592626;
 
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
 .sb_instagram_notice .sb_instagram_notice_title{
@@ -334,8 +305,6 @@
     width: 84px;
     margin: 0 0 0 -100% !important;
 
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
 }
 .sbi_review_notice .ctf-notice-text{
@@ -439,8 +408,6 @@
 	background: #f9f9f9;
 	background: rgba(255,255,255,0.8);
 	
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
 #sbi_admin .sbi_mod_manual_settings .sbi_row{
