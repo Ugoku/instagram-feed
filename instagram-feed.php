@@ -162,14 +162,13 @@ function display_instagram($atts, $content = null) {
     $sb_instagram_content .= '</div>'; //End #sb_instagram
 
     //If using an ajax theme then add the JS to the bottom of the feed
-    if($sb_instagram_ajax_theme){
-        $sb_instagram_content .= '<script type="text/javascript">var sb_instagram_js_options = {"sb_instagram_at":"'.trim($options['sb_instagram_at']).'"};</script>';
-        $sb_instagram_content .= "<script type='text/javascript' src='".plugins_url( '/js/sb-instagram.min.js?ver='.SBIVER , __FILE__ )."'></script>";
+    if ($sb_instagram_ajax_theme){
+        $sb_instagram_content .= '<script>var sb_instagram_js_options = { sb_instagram_at: "' . trim($options['sb_instagram_at']) . '" };</script>';
+        $sb_instagram_content .= '<script src="' . plugins_url('/js/sb-instagram.min.js?ver=' . SBIVER , __FILE__) . '"></script>';
     }
  
     //Return our feed HTML to display
     return $sb_instagram_content;
-
 }
 
 
@@ -253,22 +252,16 @@ function sb_instagram_custom_js() {
     $options = get_option('sb_instagram_settings');
     isset($options[ 'sb_instagram_custom_js' ]) ? $sb_instagram_custom_js = trim($options['sb_instagram_custom_js']) : $sb_instagram_custom_js = '';
 
-    if( !empty($sb_instagram_custom_js) ) echo '<!-- Instagram Feed JS -->';
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo '<script type="text/javascript">';
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo "jQuery( document ).ready(function($) {";
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo "window.sbi_custom_js = function(){";
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo stripslashes($sb_instagram_custom_js);
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo "}";
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo "});";
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";
-    if( !empty($sb_instagram_custom_js) ) echo '</script>';
-    if( !empty($sb_instagram_custom_js) ) echo "\r\n";    
+	if (!empty($sb_instagram_custom_js)) {
+		echo '<!-- Instagram Feed JS -->' .  "\r\n";
+		echo '<script>' .  "\r\n";
+		echo 'jQuery( document ).ready(function($) {' . "\r\n";
+		echo 'window.sbi_custom_js = function(){' .  "\r\n";
+		echo stripslashes($sb_instagram_custom_js) .  "\r\n";
+		echo '}' .  "\r\n";
+		echo '});' .  "\r\n";
+		echo '</script>' .  "\r\n";
+	}
 }
 
 if ( ! function_exists( 'sb_remove_style_version' ) ) {
