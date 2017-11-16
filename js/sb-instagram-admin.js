@@ -26,6 +26,9 @@ jQuery(document).ready(function($) {
 		$('#sbi_config').append('<div id="sbi_config_info"><p class="sb_get_token"><b>Access Token: </b><input type="text" size=58 readonly value="'+token+'" onclick="this.focus();this.select()" title="To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac)."></p><p><b>User ID: </b><input type="text" size=12 readonly value="'+id+'" onclick="this.focus();this.select()" title="To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac)."></p></div>');
 		if(jQuery('#sb_instagram_at').val() == '' && token.length > 40) {
 			jQuery('#sb_instagram_at').val(token);
+			if (!jQuery('#sb_instagram_user_id').val()) {
+                jQuery('#sb_instagram_user_id').val(token);
+            }
 			sbSaveToken(token);
 		} else {
 			jQuery('.sb_get_token').append('<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Use This Token"></p>');
