@@ -47,8 +47,6 @@ function display_instagram($atts, $content = null) {
         'heightunit' => $options[ 'sb_instagram_height_unit' ] ?? '',
         'sortby' => $options[ 'sb_instagram_sort' ] ?? '',
         'num' => $options[ 'sb_instagram_num' ] ?? '',
-        'imagepadding' => $options[ 'sb_instagram_image_padding' ] ?? '',
-        'imagepaddingunit' => $options[ 'sb_instagram_image_padding_unit' ] ?? '',
         'showbutton' => false,
         'showheader' => $options[ 'sb_instagram_show_header' ] ?? '',
         'showbio' => $options[ 'sb_instagram_show_bio' ] ?? '',
@@ -73,8 +71,6 @@ function display_instagram($atts, $content = null) {
     $sb_instagram_width_unit = $atts['widthunit'];
     $sb_instagram_height = $atts['height'];
     $sb_instagram_height_unit = $atts['heightunit'];
-    $sb_instagram_image_padding = $atts['imagepadding'];
-    $sb_instagram_image_padding_unit = $atts['imagepaddingunit'];
 
     //Set to be 100% width on mobile?
     $sb_instagram_width_resp = $atts[ 'widthresp' ];
@@ -87,7 +83,6 @@ function display_instagram($atts, $content = null) {
     $sb_instagram_styles .= 'max-width: 640px; ';
     if ( !empty($sb_instagram_width) ) $sb_instagram_styles .= 'width:' . $sb_instagram_width . $sb_instagram_width_unit .'; ';
     if ( !empty($sb_instagram_height) && $sb_instagram_height != '0' ) $sb_instagram_styles .= 'height:' . $sb_instagram_height . $sb_instagram_height_unit .'; ';
-    if ( !empty($sb_instagram_image_padding) ) $sb_instagram_styles .= 'padding-bottom: ' . (2*intval($sb_instagram_image_padding)).$sb_instagram_image_padding_unit . '; ';
     $sb_instagram_styles .= '"';
 
     //Header
@@ -122,13 +117,14 @@ function display_instagram($atts, $content = null) {
         ' data-id="' . $sb_instagram_user_id .
 	    '" data-num="' . trim($atts['num']) .
 	    '" data-res="auto' .
-	    '" data-options=\'{&quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot;, &quot;imagepadding&quot;: &quot;'.$sb_instagram_image_padding.'&quot;}\'>';
+	    '" data-options=\'{ &quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot; }\'>';
 
     //Header
-    if( $sb_instagram_show_header ) $sb_instagram_content .= '<div class="sb_instagram_header" style="padding: '.(2*intval($sb_instagram_image_padding)) . $sb_instagram_image_padding_unit .'; padding-bottom: 0;"></div>';
+    if( $sb_instagram_show_header )
+    	$sb_instagram_content .= '<div class="sb_instagram_header" style="padding-bottom: 0;"></div>';
 
     //Images container
-    $sb_instagram_content .= '<div id="sbi_images" style="padding: '.$sb_instagram_image_padding . $sb_instagram_image_padding_unit .';">';
+    $sb_instagram_content .= '<div id="sbi_images">';
 
     //Error messages
     $sb_instagram_error = false;

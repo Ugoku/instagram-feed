@@ -39,8 +39,6 @@ function sb_instagram_settings_page() {
         'sb_instagram_height'               => '',
         'sb_instagram_num'                  => '20',
         'sb_instagram_height_unit'          => '',
-        'sb_instagram_image_padding'        => '5',
-        'sb_instagram_image_padding_unit'   => 'px',
         'sb_instagram_sort'                 => 'none',
         'sb_instagram_btn_background'       => '',
         'sb_instagram_btn_text_color'       => '',
@@ -71,15 +69,10 @@ function sb_instagram_settings_page() {
     $sb_instagram_height = $options[ 'sb_instagram_height' ];
     $sb_instagram_height_unit = $options[ 'sb_instagram_height_unit' ];
     $sb_instagram_num = $options[ 'sb_instagram_num' ];
-    $sb_instagram_image_padding = $options[ 'sb_instagram_image_padding' ];
-    $sb_instagram_image_padding_unit = $options[ 'sb_instagram_image_padding_unit' ];
     $sb_instagram_sort = $options[ 'sb_instagram_sort' ];
     //Header
     $sb_instagram_show_header = $options[ 'sb_instagram_show_header' ];
     $sb_instagram_show_bio = isset( $options[ 'sb_instagram_show_bio' ] ) ? $options[ 'sb_instagram_show_bio' ] : true;
-    $sb_instagram_header_color = $options[ 'sb_instagram_header_color' ];
-    //Follow button
-    $sb_instagram_show_follow_btn = false;
     //Misc
     $sb_instagram_custom_js = $options[ 'sb_instagram_custom_js' ];
     $sb_instagram_disable_awesome = $options[ 'sb_instagram_disable_awesome' ];
@@ -131,13 +124,6 @@ function sb_instagram_settings_page() {
                 if ( strlen( $safe_num ) > 4 ) $safe_num = substr( $safe_num, 0, 4 );
                 $sb_instagram_num = $safe_num;
 
-                //Validate and sanitize padding field
-                $safe_padding = intval( sanitize_text_field( $_POST['sb_instagram_image_padding'] ) );
-                if ( ! $safe_padding ) $safe_padding = '';
-                if ( strlen( $safe_padding ) > 4 ) $safe_padding = substr( $safe_padding, 0, 4 );
-                $sb_instagram_image_padding = $safe_padding;
-
-                $sb_instagram_image_padding_unit = sanitize_text_field( $_POST[ 'sb_instagram_image_padding_unit' ] );
                 $sb_instagram_sort = sanitize_text_field( $_POST[ 'sb_instagram_sort' ] );
                 //Header
                 isset($_POST[ 'sb_instagram_show_header' ]) ? $sb_instagram_show_header = sanitize_text_field( $_POST[ 'sb_instagram_show_header' ] ) : $sb_instagram_show_header = '';
@@ -159,8 +145,6 @@ function sb_instagram_settings_page() {
                 $options[ 'sb_instagram_height' ] = $sb_instagram_height;
                 $options[ 'sb_instagram_height_unit' ] = $sb_instagram_height_unit;
                 $options[ 'sb_instagram_num' ] = $sb_instagram_num;
-                $options[ 'sb_instagram_image_padding' ] = $sb_instagram_image_padding;
-                $options[ 'sb_instagram_image_padding_unit' ] = $sb_instagram_image_padding_unit;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
                 //Header
                 $options[ 'sb_instagram_show_header' ] = $sb_instagram_show_header;
@@ -345,16 +329,6 @@ function sb_instagram_settings_page() {
                             <p class="sbi_tooltip"><?php _e("If you're displaying photos from multiple User IDs or hashtags then this is the number of photos which will be displayed from each.", 'instagram-feed'); ?></p>
                     </td>
                 </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Padding around Images', 'instagram-feed'); ?></label><code class="sbi_shortcode"> imagepadding  imagepaddingunit</code></th>
-                    <td>
-                        <input name="sb_instagram_image_padding" type="number" value="<?php echo esc_attr( $sb_instagram_image_padding ); ?>" size="4" maxlength="4">
-                        <select name="sb_instagram_image_padding_unit">
-                            <option value="px" <?php if($sb_instagram_image_padding_unit == "px") echo 'selected="selected"' ?> ><?php _e('px', 'instagram-feed'); ?></option>
-                            <option value="%" <?php if($sb_instagram_image_padding_unit == "%") echo 'selected="selected"' ?> ><?php _e('%', 'instagram-feed'); ?></option>
-                        </select>
-                    </td>
-                </tr>
             </tbody>
         </table>
 
@@ -512,21 +486,6 @@ function sb_instagram_settings_page() {
                     <td>num</td>
                     <td><?php _e("The number of photos to display initially. Maximum is 33.", 'instagram-feed'); ?></td>
                     <td><code>[instagram-feed num=10]</code></td>
-                </tr>
-                <tr>
-                    <td>cols</td>
-                    <td><?php _e("The number of columns in your feed. 1 - 10.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed cols=5]</code></td>
-                </tr>
-                <tr>
-                    <td>imagepadding</td>
-                    <td><?php _e("The spacing around your photos", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed imagepadding=10]</code></td>
-                </tr>
-                <tr>
-                    <td>imagepaddingunit</td>
-                    <td><?php _e("The unit of the padding. 'px' or '%'", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed imagepaddingunit=px]</code></td>
                 </tr>
 
                 <tr class="sbi_table_header"><td colspan=3><?php _e("Header Options", 'instagram-feed'); ?></td></tr>

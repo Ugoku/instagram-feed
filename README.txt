@@ -87,9 +87,6 @@ See the table below for a full list of available shortcode options:
 * **sortby** - Sort the Instagram posts by Newest to Oldest (none) or Random (random) - Example: `[instagram-feed sortby=random]`
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
-* **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
-* **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
-* **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
 *
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`
@@ -213,10 +210,6 @@ The below options are available on the Instagram Feed Settings page but can also
 * **sortby** - Sort the Instagram posts by Newest to Oldest (none) or Random (random) - Example: `[instagram-feed sortby=random]`
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
-* **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
-* **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
-* **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
-*
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`
 *
