@@ -54,7 +54,6 @@ function display_instagram($atts, $content = null) {
         'showbutton' => false,
         'showheader' => $options[ 'sb_instagram_show_header' ] ?? '',
         'showbio' => $options[ 'sb_instagram_show_bio' ] ?? '',
-        'headercolor' => $options[ 'sb_instagram_header_color' ] ?? '',
         'class' => '',
         'ajaxtheme' => $options[ 'sb_instagram_ajax_theme' ] ?? ''
     ], $atts);
@@ -98,7 +97,6 @@ function display_instagram($atts, $content = null) {
     $sb_instagram_show_header = $atts['showheader'];
     ( $sb_instagram_show_header == 'on' || $sb_instagram_show_header == 'true' || $sb_instagram_show_header == true ) ? $sb_instagram_show_header = true : $sb_instagram_show_header = false;
     if( $atts[ 'showheader' ] === 'false' ) $sb_instagram_show_header = false;
-    $sb_instagram_header_color = str_replace('#', '', $atts['headercolor']);
 
 	$sb_instagram_show_bio = $atts['showbio'];
 	( $sb_instagram_show_bio == 'on' || $sb_instagram_show_bio == 'true' || $sb_instagram_show_bio ) ? $sb_instagram_show_bio = 'true' : $sb_instagram_show_bio = 'false';
@@ -128,7 +126,12 @@ function display_instagram($atts, $content = null) {
     if ( !empty($sb_instagram_height) ) $sb_instagram_content .= ' sbi_fixed_height ';
     $sb_instagram_content .= ' sbi_col_' . trim($sb_instagram_cols);
     if ( $sb_instagram_width_resp ) $sb_instagram_content .= ' sbi_width_resp';
-    $sb_instagram_content .= '" '.$sb_instagram_styles .' data-id="' . $sb_instagram_user_id . '" data-num="' . trim($atts['num']) . '" data-res="auto" data-cols="' . trim($sb_instagram_cols) . '" data-options=\'{&quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot;, &quot;headercolor&quot;: &quot;'.$sb_instagram_header_color.'&quot;, &quot;imagepadding&quot;: &quot;'.$sb_instagram_image_padding.'&quot;}\'>';
+    $sb_instagram_content .=
+	    '" '.$sb_instagram_styles .
+        ' data-id="' . $sb_instagram_user_id .
+	    '" data-num="' . trim($atts['num']) .
+	    '" data-res="auto" data-cols="' . trim($sb_instagram_cols) .
+	    '" data-options=\'{&quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot;, &quot;imagepadding&quot;: &quot;'.$sb_instagram_image_padding.'&quot;}\'>';
 
     //Header
     if( $sb_instagram_show_header ) $sb_instagram_content .= '<div class="sb_instagram_header" style="padding: '.(2*intval($sb_instagram_image_padding)) . $sb_instagram_image_padding_unit .'; padding-bottom: 0;"></div>';

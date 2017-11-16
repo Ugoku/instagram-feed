@@ -423,13 +423,6 @@ function sb_instagram_settings_page() {
                         <span class="sbi_note"><?php _e("This only applies for User IDs with bios"); ?></span>
                     </td>
                 </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Header Text Color', 'instagram-feed'); ?></label><code class="sbi_shortcode"> headercolor
-                        Eg: headercolor=fff</code></th>
-                    <td>
-                        <input name="sb_instagram_header_color" type="text" value="<?php echo esc_attr( $sb_instagram_header_color ); ?>" class="sbi_colorpick" />
-                    </td>
-                </tr>
             </tbody>
         </table>
 
@@ -576,11 +569,6 @@ function sb_instagram_settings_page() {
                     <td>showbio</td>
                     <td><?php _e("Display the bio in the header. 'true' or 'false'."); ?></td>
                     <td><code>[instagram-feed showbio=true]</code></td>
-                </tr>
-                <tr>
-                    <td>headercolor</td>
-                    <td><?php _e("The color of the Header text. Any hex color code.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed headercolor=#333]</code></td>
                 </tr>
             </tbody>
         </table>

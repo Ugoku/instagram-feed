@@ -94,7 +94,6 @@ See the table below for a full list of available shortcode options:
 *
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`
-* **headercolor** - The color of the Instagram feed Header text. Any hex color code - Example: `[instagram-feed headercolor=#333]`
 *
 * **'Load More' Button Options**
 * **showbutton** - Whether to show the 'Load More' button. 'true' or 'false' - Example: `[instagram-feed showbutton='false']`
@@ -222,7 +221,6 @@ The below options are available on the Instagram Feed Settings page but can also
 *
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`
-* **headercolor** - The color of the Instagram feed Header text. Any hex color code - Example: `[instagram-feed headercolor=#333]`
 *
 * **'Load More' Button Options**
 * **showbutton** - Whether to show the 'Load More' button. 'true' or 'false' - Example: `[instagram-feed showbutton='false']`

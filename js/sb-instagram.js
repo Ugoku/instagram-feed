@@ -84,8 +84,6 @@ if(!sbi_js_exists){
             var headerStyles = '',
                 sbi_page_url = 'https://api.instagram.com/v1/users/' + ids_arr[0] + '?access_token=' + sb_instagram_js_options.sb_instagram_at;
 
-            if(feedOptions.headercolor.length) headerStyles = 'style="color: #'+feedOptions.headercolor+'"';
-
             jQuery.ajax({
                 method: "GET",
                 url: sbi_page_url,
