@@ -90,7 +90,6 @@ See the table below for a full list of available shortcode options:
 * **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
 * **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
 * **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
-* **disablemobile** - Disable the mobile layout for your Instagram feed. 'true' or 'false' - Example: `[instagram-feed disablemobile=true]`
 *
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`
@@ -217,7 +216,6 @@ The below options are available on the Instagram Feed Settings page but can also
 * **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
 * **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
 * **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
-* **disablemobile** - Disable the mobile layout for your Instagram feed. 'true' or 'false' - Example: `[instagram-feed disablemobile=true]`
 *
 * **Header Options**
 * **showheader** - Whether to show the Instagram feed Header. 'true' or 'false' - Example: `[instagram-feed showheader=false]`

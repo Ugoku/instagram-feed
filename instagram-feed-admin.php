@@ -40,7 +40,6 @@ function sb_instagram_settings_page() {
         'sb_instagram_num'                  => '20',
         'sb_instagram_height_unit'          => '',
         'sb_instagram_cols'                 => '4',
-        'sb_instagram_disable_mobile'       => false,
         'sb_instagram_image_padding'        => '5',
         'sb_instagram_image_padding_unit'   => 'px',
         'sb_instagram_sort'                 => 'none',
@@ -74,7 +73,6 @@ function sb_instagram_settings_page() {
     $sb_instagram_height_unit = $options[ 'sb_instagram_height_unit' ];
     $sb_instagram_num = $options[ 'sb_instagram_num' ];
     $sb_instagram_cols = $options[ 'sb_instagram_cols' ];
-    $sb_instagram_disable_mobile = $options[ 'sb_instagram_disable_mobile' ];
     $sb_instagram_image_padding = $options[ 'sb_instagram_image_padding' ];
     $sb_instagram_image_padding_unit = $options[ 'sb_instagram_image_padding_unit' ];
     $sb_instagram_sort = $options[ 'sb_instagram_sort' ];
@@ -136,7 +134,6 @@ function sb_instagram_settings_page() {
                 $sb_instagram_num = $safe_num;
 
                 $sb_instagram_cols = sanitize_text_field( $_POST[ 'sb_instagram_cols' ] );
-                isset($_POST[ 'sb_instagram_disable_mobile' ]) ? $sb_instagram_disable_mobile = sanitize_text_field( $_POST[ 'sb_instagram_disable_mobile' ] ) : $sb_instagram_disable_mobile = '';
 
                 //Validate and sanitize padding field
                 $safe_padding = intval( sanitize_text_field( $_POST['sb_instagram_image_padding'] ) );
@@ -167,7 +164,6 @@ function sb_instagram_settings_page() {
                 $options[ 'sb_instagram_height_unit' ] = $sb_instagram_height_unit;
                 $options[ 'sb_instagram_num' ] = $sb_instagram_num;
                 $options[ 'sb_instagram_cols' ] = $sb_instagram_cols;
-                $options[ 'sb_instagram_disable_mobile' ] = $sb_instagram_disable_mobile;
                 $options[ 'sb_instagram_image_padding' ] = $sb_instagram_image_padding;
                 $options[ 'sb_instagram_image_padding_unit' ] = $sb_instagram_image_padding_unit;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
@@ -371,15 +367,6 @@ function sb_instagram_settings_page() {
                         </select>
                     </td>
                 </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e("Disable mobile layout", 'instagram-feed'); ?></label><code class="sbi_shortcode"> disablemobile
-                        Eg: disablemobile=true</code></th>
-                    <td>
-                        <input type="checkbox" name="sb_instagram_disable_mobile" id="sb_instagram_disable_mobile" <?php if($sb_instagram_disable_mobile == true) echo 'checked="checked"' ?> />
-                        &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e( 'What does this mean?', 'instagram-feed' ); ?></a>
-                            <p class="sbi_tooltip"><?php _e("By default on mobile devices the layout automatically changes to use fewer columns. Checking this setting disables the mobile layout.", 'instagram-feed'); ?></p>
-                    </td>
-                </tr>
             </tbody>
         </table>
 
@@ -552,11 +539,6 @@ function sb_instagram_settings_page() {
                     <td>imagepaddingunit</td>
                     <td><?php _e("The unit of the padding. 'px' or '%'", 'instagram-feed'); ?></td>
                     <td><code>[instagram-feed imagepaddingunit=px]</code></td>
-                </tr>
-                <tr>
-                    <td>disablemobile</td>
-                    <td><?php _e("Disable the mobile layout. 'true' or 'false'.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed disablemobile=true]</code></td>
                 </tr>
 
                 <tr class="sbi_table_header"><td colspan=3><?php _e("Header Options", 'instagram-feed'); ?></td></tr>

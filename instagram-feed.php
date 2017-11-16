@@ -48,7 +48,6 @@ function display_instagram($atts, $content = null) {
         'sortby' => $options[ 'sb_instagram_sort' ] ?? '',
         'num' => $options[ 'sb_instagram_num' ] ?? '',
         'cols' => $options[ 'sb_instagram_cols' ] ?? '',
-        'disablemobile' => $options[ 'sb_instagram_disable_mobile' ] ?? '',
         'imagepadding' => $options[ 'sb_instagram_image_padding' ] ?? '',
         'imagepaddingunit' => $options[ 'sb_instagram_image_padding_unit' ] ?? '',
         'showbutton' => false,
@@ -106,23 +105,18 @@ function display_instagram($atts, $content = null) {
 	//As this is a new option in the update then set it to be true if it doesn't exist yet
 	if ( !array_key_exists( 'sb_instagram_show_bio', $options ) ) $sb_instagram_show_bio = 'true';
 
-    //Mobile
-    $sb_instagram_disable_mobile = $atts['disablemobile'];
-    ( $sb_instagram_disable_mobile == 'on' || $sb_instagram_disable_mobile == 'true' || $sb_instagram_disable_mobile == true ) ? $sb_instagram_disable_mobile = ' sbi_disable_mobile' : $sb_instagram_disable_mobile = '';
-    if( $atts[ 'disablemobile' ] === 'false' ) $sb_instagram_disable_mobile = '';
-
     //Class
     !empty( $atts['class'] ) ? $sbi_class = ' ' . trim($atts['class']) : $sbi_class = '';
 
     //Ajax theme
     $sb_instagram_ajax_theme = $atts['ajaxtheme'];
     ( $sb_instagram_ajax_theme == 'on' || $sb_instagram_ajax_theme == 'true' || $sb_instagram_ajax_theme == true ) ? $sb_instagram_ajax_theme = true : $sb_instagram_ajax_theme = false;
-    if( $atts[ 'disablemobile' ] === 'false' ) $sb_instagram_ajax_theme = false;
+    $sb_instagram_ajax_theme = false;
 
 
     /******************* CONTENT ********************/
 
-    $sb_instagram_content = '<div id="sb_instagram" class="sbi' . $sbi_class . $sb_instagram_disable_mobile;
+    $sb_instagram_content = '<div id="sb_instagram" class="sbi' . $sbi_class;
     if ( !empty($sb_instagram_height) ) $sb_instagram_content .= ' sbi_fixed_height ';
     $sb_instagram_content .= ' sbi_col_' . trim($sb_instagram_cols);
     if ( $sb_instagram_width_resp ) $sb_instagram_content .= ' sbi_width_resp';
