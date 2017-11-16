@@ -28,7 +28,7 @@ function sb_instagram_settings_page() {
     $sb_instagram_customize_hidden_field = 'sb_instagram_customize_hidden_field';
 
     //Declare defaults
-    $sb_instagram_settings_defaults = array(
+    $sb_instagram_settings_defaults = [
         'sb_instagram_at'                   => '',
         'sb_instagram_user_id'              => '',
         'sb_instagram_preserve_settings'    => '',
@@ -45,11 +45,9 @@ function sb_instagram_settings_page() {
         'sb_instagram_image_padding_unit'   => 'px',
         'sb_instagram_sort'                 => 'none',
         'sb_instagram_background'           => '',
-        'sb_instagram_show_btn'             => true,
         'sb_instagram_btn_background'       => '',
         'sb_instagram_btn_text_color'       => '',
         'sb_instagram_btn_text'             => __( 'Load More...', 'instagram-feed' ),
-        'sb_instagram_image_res'            => 'auto',
         //Header
         'sb_instagram_show_header'          => true,
         'sb_instagram_header_color'         => '',
@@ -62,7 +60,7 @@ function sb_instagram_settings_page() {
         'sb_instagram_custom_css'           => '',
         'sb_instagram_custom_js'            => '',
         'sb_instagram_disable_awesome'      => false
-    );
+    ];
     //Save defaults in an array
     $options = wp_parse_args(get_option('sb_instagram_settings'), $sb_instagram_settings_defaults);
     update_option( 'sb_instagram_settings', $options );
@@ -84,20 +82,12 @@ function sb_instagram_settings_page() {
     $sb_instagram_image_padding_unit = $options[ 'sb_instagram_image_padding_unit' ];
     $sb_instagram_sort = $options[ 'sb_instagram_sort' ];
     $sb_instagram_background = $options[ 'sb_instagram_background' ];
-    $sb_instagram_show_btn = $options[ 'sb_instagram_show_btn' ];
-    $sb_instagram_btn_background = $options[ 'sb_instagram_btn_background' ];
-    $sb_instagram_btn_text_color = $options[ 'sb_instagram_btn_text_color' ];
-    $sb_instagram_btn_text = $options[ 'sb_instagram_btn_text' ];
-    $sb_instagram_image_res = $options[ 'sb_instagram_image_res' ];
     //Header
     $sb_instagram_show_header = $options[ 'sb_instagram_show_header' ];
     $sb_instagram_show_bio = isset( $options[ 'sb_instagram_show_bio' ] ) ? $options[ 'sb_instagram_show_bio' ] : true;
     $sb_instagram_header_color = $options[ 'sb_instagram_header_color' ];
     //Follow button
-    $sb_instagram_show_follow_btn = $options[ 'sb_instagram_show_follow_btn' ];
-    $sb_instagram_folow_btn_background = $options[ 'sb_instagram_folow_btn_background' ];
-    $sb_instagram_follow_btn_text_color = $options[ 'sb_instagram_follow_btn_text_color' ];
-    $sb_instagram_follow_btn_text = $options[ 'sb_instagram_follow_btn_text' ];
+    $sb_instagram_show_follow_btn = false;
     //Misc
     $sb_instagram_custom_css = $options[ 'sb_instagram_custom_css' ];
     $sb_instagram_custom_js = $options[ 'sb_instagram_custom_js' ];
@@ -162,11 +152,7 @@ function sb_instagram_settings_page() {
                 $sb_instagram_image_padding_unit = sanitize_text_field( $_POST[ 'sb_instagram_image_padding_unit' ] );
                 $sb_instagram_sort = sanitize_text_field( $_POST[ 'sb_instagram_sort' ] );
                 $sb_instagram_background = sanitize_text_field( $_POST[ 'sb_instagram_background' ] );
-                isset($_POST[ 'sb_instagram_show_btn' ]) ? $sb_instagram_show_btn = sanitize_text_field( $_POST[ 'sb_instagram_show_btn' ] ) : $sb_instagram_show_btn = '';
-                $sb_instagram_btn_background = sanitize_text_field( $_POST[ 'sb_instagram_btn_background' ] );
-                $sb_instagram_btn_text_color = sanitize_text_field( $_POST[ 'sb_instagram_btn_text_color' ] );
 	            $sb_instagram_btn_text = sanitize_text_field( $_POST[ 'sb_instagram_btn_text' ] );
-                $sb_instagram_image_res = sanitize_text_field( $_POST[ 'sb_instagram_image_res' ] );
                 //Header
                 isset($_POST[ 'sb_instagram_show_header' ]) ? $sb_instagram_show_header = sanitize_text_field( $_POST[ 'sb_instagram_show_header' ] ) : $sb_instagram_show_header = '';
                 isset($_POST[ 'sb_instagram_show_bio' ]) ? $sb_instagram_show_bio = sanitize_text_field( $_POST[ 'sb_instagram_show_bio' ] ) : $sb_instagram_show_bio = '';
@@ -194,11 +180,7 @@ function sb_instagram_settings_page() {
                 $options[ 'sb_instagram_image_padding_unit' ] = $sb_instagram_image_padding_unit;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
                 $options[ 'sb_instagram_background' ] = $sb_instagram_background;
-                $options[ 'sb_instagram_show_btn' ] = $sb_instagram_show_btn;
-                $options[ 'sb_instagram_btn_background' ] = $sb_instagram_btn_background;
-                $options[ 'sb_instagram_btn_text_color' ] = $sb_instagram_btn_text_color;
 	            $options[ 'sb_instagram_btn_text' ] = $sb_instagram_btn_text;
-                $options[ 'sb_instagram_image_res' ] = $sb_instagram_image_res;
                 //Header
                 $options[ 'sb_instagram_show_header' ] = $sb_instagram_show_header;
                 $options[ 'sb_instagram_show_bio' ] = $sb_instagram_show_bio;
@@ -251,8 +233,7 @@ function sb_instagram_settings_page() {
                     <h3><?php _e( 'Configure', 'instagram-feed' ); ?></h3>
 
                     <div id="sbi_config">
-                        <!-- <a href="https://instagram.com/oauth/authorize/?client_id=1654d0c81ad04754a898d89315bec227&redirect_uri=https://smashballoon.com/instagram-feed/instagram-token-plugin/?return_uri=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>&response_type=token" class="sbi_admin_btn"><?php _e( 'Log in and get my Access Token and User ID', 'instagram-feed' ); ?></a> -->
-                        <a href="https://instagram.com/oauth/authorize/?client_id=3a81a9fa2a064751b8c31385b91cc25c&scope=basic+public_content&redirect_uri=https://smashballoon.com/instagram-feed/instagram-token-plugin/?return_uri=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>&response_type=token" class="sbi_admin_btn"><?php _e( 'Log in and get my Access Token and User ID', 'instagram-feed' ); ?></a>
+                        <a href="https://instagram.com/oauth/authorize/?client_id=3a81a9fa2a064751b8c31385b91cc25c&scope=basic+public_content&redirect_uri=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>&response_type=token" class="sbi_admin_btn"><?php _e( 'Log in and get my Access Token and User ID', 'instagram-feed' ); ?></a>
                         <a href="https://smashballoon.com/instagram-feed/token/" target="_blank" style="position: relative; top: 14px; left: 15px;"><?php _e( 'Button not working?', 'instagram-feed' ); ?></a>
                     </div>
                     
@@ -450,23 +431,6 @@ function sb_instagram_settings_page() {
                             <option value="random" <?php if($sb_instagram_sort == "random") echo 'selected="selected"' ?> ><?php _e('Random', 'instagram-feed'); ?></option>
                         </select>
                     </td>
-                </tr>                
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Image Resolution', 'instagram-feed'); ?></label><code class="sbi_shortcode"> imageres
-                        Eg: imageres=thumb</code></th>
-                    <td>
-
-                        <select name="sb_instagram_image_res">
-                            <option value="auto" <?php if($sb_instagram_image_res == "auto") echo 'selected="selected"' ?> ><?php _e('Auto-detect (recommended)', 'instagram-feed'); ?></option>
-                            <option value="thumb" <?php if($sb_instagram_image_res == "thumb") echo 'selected="selected"' ?> ><?php _e('Thumbnail (150x150)', 'instagram-feed'); ?></option>
-                            <option value="medium" <?php if($sb_instagram_image_res == "medium") echo 'selected="selected"' ?> ><?php _e('Medium (306x306)', 'instagram-feed'); ?></option>
-                            <option value="full" <?php if($sb_instagram_image_res == "full") echo 'selected="selected"' ?> ><?php _e('Full size (640x640)', 'instagram-feed'); ?></option>
-                        </select>
-
-                        &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e( 'What does Auto-detect mean?', 'instagram-feed'); ?></a>
-                            <p class="sbi_tooltip"><?php _e("Auto-detect means that the plugin automatically sets the image resolution based on the size of your feed.", 'instagram-feed'); ?></p>
-
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -503,43 +467,6 @@ function sb_instagram_settings_page() {
 
         <?php submit_button(); ?>
 
-        <hr id="loadmore">
-        <h3><?php _e("'Load More' Button", 'instagram-feed'); ?></h3>
-        <table class="form-table">
-            <tbody>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e("Show the 'Load More' button", 'instagram-feed'); ?></label><code class="sbi_shortcode"> showbutton
-                        Eg: showbutton=false</code></th>
-                    <td>
-                        <input type="checkbox" name="sb_instagram_show_btn" id="sb_instagram_show_btn" <?php if($sb_instagram_show_btn == true) echo 'checked="checked"' ?> />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Background Color', 'instagram-feed'); ?></label><code class="sbi_shortcode"> buttoncolor
-                        Eg: buttoncolor=8224e3</code></th>
-                    <td>
-                        <input name="sb_instagram_btn_background" type="text" value="<?php echo esc_attr( $sb_instagram_btn_background ); ?>" class="sbi_colorpick" />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Text Color', 'instagram-feed'); ?></label><code class="sbi_shortcode"> buttontextcolor
-                        Eg: buttontextcolor=eeee22</code></th>
-                    <td>
-                        <input name="sb_instagram_btn_text_color" type="text" value="<?php echo esc_attr( $sb_instagram_btn_text_color ); ?>" class="sbi_colorpick" />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Text', 'instagram-feed'); ?></label><code class="sbi_shortcode"> buttontext
-                        Eg: buttontext="Show more.."</code></th>
-                    <td>
-                        <input name="sb_instagram_btn_text" type="text" value="<?php echo esc_attr( stripslashes( $sb_instagram_btn_text ) ); ?>" size="20" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <?php submit_button(); ?>
-
         <hr id="follow" />
         <h3><?php _e("'Follow' Button", 'instagram-feed'); ?></h3>
         <table class="form-table">
@@ -549,28 +476,6 @@ function sb_instagram_settings_page() {
                         Eg: showfollow=true</code></th>
                     <td>
                         <input type="checkbox" name="sb_instagram_show_follow_btn" id="sb_instagram_show_follow_btn" <?php if($sb_instagram_show_follow_btn == true) echo 'checked="checked"' ?> />
-                    </td>
-                </tr>
-
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Background Color', 'instagram-feed'); ?></label><code class="sbi_shortcode"> followcolor
-                        Eg: followcolor=28a1bf</code></th>
-                    <td>
-                        <input name="sb_instagram_folow_btn_background" type="text" value="<?php echo esc_attr( $sb_instagram_folow_btn_background ); ?>" class="sbi_colorpick" />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Text Color', 'instagram-feed'); ?></label><code class="sbi_shortcode"> followtextcolor
-                        Eg: followtextcolor=000</code></th>
-                    <td>
-                        <input name="sb_instagram_follow_btn_text_color" type="text" value="<?php echo esc_attr( $sb_instagram_follow_btn_text_color ); ?>" class="sbi_colorpick" />
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Button Text', 'instagram-feed'); ?></label><code class="sbi_shortcode"> followtext
-                        Eg: followtext="Follow me"</code></th>
-                    <td>
-                        <input name="sb_instagram_follow_btn_text" type="text" value="<?php echo esc_attr( stripslashes( $sb_instagram_follow_btn_text ) ); ?>" size="30" />
                     </td>
                 </tr>
             </tbody>
@@ -707,11 +612,6 @@ function sb_instagram_settings_page() {
                     <td><code>[instagram-feed cols=5]</code></td>
                 </tr>
                 <tr>
-                    <td>imageres</td>
-                    <td><?php _e("The resolution/size of the photos. 'auto', full', 'medium' or 'thumb'.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed imageres=full]</code></td>
-                </tr>
-                <tr>
                     <td>imagepadding</td>
                     <td><?php _e("The spacing around your photos", 'instagram-feed'); ?></td>
                     <td><code>[instagram-feed imagepadding=10]</code></td>
@@ -742,50 +642,6 @@ function sb_instagram_settings_page() {
                     <td>headercolor</td>
                     <td><?php _e("The color of the Header text. Any hex color code.", 'instagram-feed'); ?></td>
                     <td><code>[instagram-feed headercolor=#333]</code></td>
-                </tr>
-                
-                <tr class="sbi_table_header"><td colspan=3><?php _e("'Load More' Button Options", 'instagram-feed'); ?></td></tr>
-                <tr>
-                    <td>showbutton</td>
-                    <td><?php _e("Whether to show the 'Load More' button. 'true' or 'false'.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed showbutton=false]</code></td>
-                </tr>
-                <tr>
-                    <td>buttoncolor</td>
-                    <td><?php _e("The background color of the button. Any hex color code.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed buttoncolor=#000]</code></td>
-                </tr>
-                <tr>
-                    <td>buttontextcolor</td>
-                    <td><?php _e("The text color of the button. Any hex color code.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed buttontextcolor=#fff]</code></td>
-                </tr>
-                <tr>
-                    <td>buttontext</td>
-                    <td><?php _e("The text used for the button.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed buttontext="Load More Photos"]</code></td>
-                </tr>
-
-                <tr class="sbi_table_header"><td colspan=3><?php _e("'Follow on Instagram' Button Options", 'instagram-feed'); ?></td></tr>
-                <tr>
-                    <td>showfollow</td>
-                    <td><?php _e("Whether to show the 'Follow on Instagram' button. 'true' or 'false'.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed showfollow=false]</code></td>
-                </tr>
-                <tr>
-                    <td>followcolor</td>
-                    <td><?php _e("The background color of the button. Any hex color code.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed followcolor=#ff0000]</code></td>
-                </tr>
-                <tr>
-                    <td>followtextcolor</td>
-                    <td><?php _e("The text color of the button. Any hex color code.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed followtextcolor=#fff]</code></td>
-                </tr>
-                <tr>
-                    <td>followtext</td>
-                    <td><?php _e("The text used for the button.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed followtext="Follow me"]</code></td>
                 </tr>
             </tbody>
         </table>
@@ -874,7 +730,7 @@ Web Server Info:          <?php echo $_SERVER['SERVER_SOFTWARE'] . "\n"; ?>
 ## ACTIVE PLUGINS: ##
 <?php
 $plugins = get_plugins();
-$active_plugins = get_option( 'active_plugins', array() );
+$active_plugins = get_option( 'active_plugins', [] );
 
 foreach ( $plugins as $plugin_path => $plugin ) {
     // If the plugin isn't active, don't show it.
@@ -897,10 +753,10 @@ while (list($key, $val) = each($sbi_options)) {
 <?php
 $url = isset( $sbi_options['sb_instagram_at'] ) ? 'https://api.instagram.com/v1/users/self/?access_token=' . $sbi_options['sb_instagram_at'] : 'no_at';
 if ( $url !== 'no_at' ) {
-    $args = array(
+    $args = [
         'timeout' => 60,
         'sslverify' => false
-    );
+    ];
     $result = wp_remote_get( $url, $args );
 
     $data = json_decode( $result['body'] );
@@ -911,10 +767,10 @@ if ( $url !== 'no_at' ) {
         echo 'posts: ' . $data->data->counts->media . "\n";
 
         $url = 'https://api.instagram.com/v1/users/13460080?access_token=' . $sbi_options['sb_instagram_at'];
-        $args = array(
+        $args = [
             'timeout' => 60,
             'sslverify' => false
-        );
+        ];
         $search_result = wp_remote_get( $url, $args );
         $search_data = json_decode( $search_result['body'] );
 
@@ -955,7 +811,7 @@ if ( $url !== 'no_at' ) {
 <?php } //End Settings page
 
 function sb_instagram_admin_style() {
-        wp_register_style( 'sb_instagram_admin_css', plugins_url('css/sb-instagram-admin.css', __FILE__), array(), SBIVER );
+        wp_register_style( 'sb_instagram_admin_css', plugins_url('css/sb-instagram-admin.css', __FILE__), [], SBIVER );
         wp_enqueue_style( 'sb_instagram_font_awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
         wp_enqueue_style( 'sb_instagram_admin_css' );
         wp_enqueue_style( 'wp-color-picker' );
@@ -963,26 +819,26 @@ function sb_instagram_admin_style() {
 add_action( 'admin_enqueue_scripts', 'sb_instagram_admin_style' );
 
 function sb_instagram_admin_scripts() {
-    wp_enqueue_script( 'sb_instagram_admin_js', plugins_url( 'js/sb-instagram-admin.js' , __FILE__ ), array(), SBIVER );
-    wp_localize_script( 'sb_instagram_admin_js', 'sbiA', array(
+    wp_enqueue_script( 'sb_instagram_admin_js', plugins_url( 'js/sb-instagram-admin.js' , __FILE__ ), [], SBIVER );
+    wp_localize_script( 'sb_instagram_admin_js', 'sbiA', [
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'sbi_nonce' => wp_create_nonce( 'sbi-smash-balloon' )
-        )
+	    ]
     );
     if( !wp_script_is('jquery-ui-draggable') ) { 
         wp_enqueue_script(
-            array(
+            [
             'jquery',
             'jquery-ui-core',
             'jquery-ui-draggable'
-            )
+            ]
         );
     }
     wp_enqueue_script(
-        array(
+        [
         'hoverIntent',
         'wp-color-picker'
-        )
+        ]
     );
 }
 add_action( 'admin_enqueue_scripts', 'sb_instagram_admin_scripts' );
@@ -1069,7 +925,7 @@ function sbi_auto_save_tokens() {
     if ( current_user_can( 'edit_posts' ) ) {
         wp_cache_delete ( 'alloptions', 'options' );
 
-        $options = get_option( 'sb_instagram_settings', array() );
+        $options = get_option( 'sb_instagram_settings', [] );
         $options['sb_instagram_at'] = isset( $_POST['access_token'] ) ? sanitize_text_field( $_POST['access_token'] ) : '';
 
         update_option( 'sb_instagram_settings', $options );

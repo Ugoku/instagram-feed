@@ -280,7 +280,6 @@
   width: 100%;
   text-align: center;
 }
-#sb_instagram #sbi_load .sbi_load_btn,
 #sb_instagram .sbi_follow_btn a{
   display: -moz-inline-stack;
   display: inline-block;
@@ -324,9 +323,7 @@
   color: #fff;
 }
 #sb_instagram .sbi_follow_btn a:hover,
-#sb_instagram .sbi_follow_btn a:focus,
-#sb_instagram #sbi_load .sbi_load_btn:hover,
-#sb_instagram #sbi_load .sbi_load_btn:focus{
+#sb_instagram .sbi_follow_btn a:focus {
   filter: alpha(opacity=85);
   opacity: 0.85;
 }

@@ -1,7 +1,8 @@
 === Instagram Feed ===
 Contributors: smashballoon, craig-at-smash-balloon
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
-Requires at least: 3.0
+Requires at least: 4.8
+Requires PHP: 7.0.0
 Tested up to: 4.9
 Stable tag: 1.5.0
 License: GPLv2 or later
@@ -68,7 +69,7 @@ If you'd like to display multiple Instagram feeds then you can set different set
 You can display as many different Instagram feeds as you like, on either the same page or on different pages, by just using the shortcode options below. For example:
 `[instagram-feed]`
 `[instagram-feed id="ANOTHER_USER_ID"]`
-`[instagram-feed id="ANOTHER_USER_ID, YET_ANOTHER_USER_ID" num=4 cols=4 showfollow=false]`
+`[instagram-feed id="ANOTHER_USER_ID, YET_ANOTHER_USER_ID" num=4 cols=4]`
 
 See the table below for a full list of available shortcode options:
 
@@ -87,7 +88,6 @@ See the table below for a full list of available shortcode options:
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
 * **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
-* **imageres** - The resolution/size of the Instagram photos. 'auto', full', 'medium' or 'thumb' - Example: `[instagram-feed imageres=full]`
 * **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
 * **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
 * **disablemobile** - Disable the mobile layout for your Instagram feed. 'true' or 'false' - Example: `[instagram-feed disablemobile=true]`
@@ -98,15 +98,7 @@ See the table below for a full list of available shortcode options:
 *
 * **'Load More' Button Options**
 * **showbutton** - Whether to show the 'Load More' button. 'true' or 'false' - Example: `[instagram-feed showbutton='false']`
-* **buttoncolor** - The background color of the button. Any hex color code - Example: `[instagram-feed buttoncolor=#000]`
-* **buttontextcolor** - The text color of the button. Any hex color code - Example: `[instagram-feed buttontextcolor=#fff]`
-* **buttontext** - The text used for the button - Example: `[instagram-feed buttontext="Load More Photos"]`
 *
-* **'Follow on Instagram' Button Options**
-* **showfollow** - Whether to show the 'Follow on Instagram' button. 'true' or 'false' - Example: `[instagram-feed showfollow=true]`
-* **followcolor** - The background color of the 'Follow on Instagram' button. Any hex color code - Example: `[instagram-feed followcolor=#ff0000]`
-* **followtextcolor** - The text color of the 'Follow on Instagram' button. Any hex color code - Example: `[instagram-feed followtextcolor=#fff]`
-* **followtext** - The text used for the 'Follow on Instagram' button - Example: `[instagram-feed followtext="Follow me"]`
 
 For more shortcode options, check out the [Pro version](http://smashballoon.com/instagram-feed/ 'Instagram Feed Pro').
 
@@ -224,7 +216,6 @@ The below options are available on the Instagram Feed Settings page but can also
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
 * **cols** - The number of columns in your Instagram feed. 1 - 10 - Example: `[instagram-feed cols=5]`
-* **imageres** - The resolution/size of the Instagram photos. 'auto', full', 'medium' or 'thumb' - Example: `[instagram-feed imageres=full]`
 * **imagepadding** - The spacing around your Instagram photos - Example: `[instagram-feed imagepadding=10]`
 * **imagepaddingunit** - The unit of the padding in your Instagram feed. 'px' or '%' - Example: `[instagram-feed imagepaddingunit=px]`
 * **disablemobile** - Disable the mobile layout for your Instagram feed. 'true' or 'false' - Example: `[instagram-feed disablemobile=true]`
@@ -235,15 +226,7 @@ The below options are available on the Instagram Feed Settings page but can also
 *
 * **'Load More' Button Options**
 * **showbutton** - Whether to show the 'Load More' button. 'true' or 'false' - Example: `[instagram-feed showbutton='false']`
-* **buttoncolor** - The background color of the button. Any hex color code - Example: `[instagram-feed buttoncolor=#000]`
-* **buttontextcolor** - The text color of the button. Any hex color code - Example: `[instagram-feed buttontextcolor=#fff]`
-* **buttontext** - The text used for the button - Example: `[instagram-feed buttontext="Load More Photos"]`
 *
-* **'Follow on Instagram' Button Options**
-* **showfollow** - Whether to show the 'Follow on Instagram' button. 'true' or 'false' - Example: `[instagram-feed showfollow=true]`
-* **followcolor** - The background color of the 'Follow on Instagram' button. Any hex color code - Example: `[instagram-feed followcolor=#ff0000]`
-* **followtextcolor** - The text color of the 'Follow on Instagram' button. Any hex color code - Example: `[instagram-feed followtextcolor=#fff]`
-* **followtext** - The text used for the 'Follow on Instagram' button - Example: `[instagram-feed followtext="Follow me"]`
 
 For more shortcode options, check out the [Pro version](http://smashballoon.com/instagram-feed/ 'Instagram Feed Pro').
 

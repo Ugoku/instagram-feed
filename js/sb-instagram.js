@@ -151,12 +151,8 @@ if(!sbi_js_exists){
                         /* Load more button */
                         if (this.hasNext()) morePosts.push('1');
 
-                        if(morePosts.length > 0){
-                            $loadBtn.show();
-                        } else {
-                            $loadBtn.hide();
-                            $self.css('padding-bottom', 0);
-                        }
+                        $loadBtn.hide();
+                        $self.css('padding-bottom', 0);
 
 
                         // Call Custom JS if it exists
@@ -320,10 +316,6 @@ if(!sbi_js_exists){
                             }
                         }
                     }
-                });
-
-                $loadBtn.click(function() {
-                    userFeed.next();
                 });
 
                 userFeed.run();
