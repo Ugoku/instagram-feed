@@ -51,7 +51,6 @@ function display_instagram($atts, $content = null) {
         'disablemobile' => $options[ 'sb_instagram_disable_mobile' ] ?? '',
         'imagepadding' => $options[ 'sb_instagram_image_padding' ] ?? '',
         'imagepaddingunit' => $options[ 'sb_instagram_image_padding_unit' ] ?? '',
-        'background' => $options[ 'sb_instagram_background' ] ?? '',
         'showbutton' => false,
         'showheader' => $options[ 'sb_instagram_show_header' ] ?? '',
         'showbio' => $options[ 'sb_instagram_show_bio' ] ?? '',
@@ -79,7 +78,6 @@ function display_instagram($atts, $content = null) {
     $sb_instagram_height_unit = $atts['heightunit'];
     $sb_instagram_image_padding = $atts['imagepadding'];
     $sb_instagram_image_padding_unit = $atts['imagepaddingunit'];
-    $sb_instagram_background = $atts['background'];
 
     //Set to be 100% width on mobile?
     $sb_instagram_width_resp = $atts[ 'widthresp' ];
@@ -93,7 +91,6 @@ function display_instagram($atts, $content = null) {
     if($sb_instagram_cols == 1) $sb_instagram_styles .= 'max-width: 640px; ';
     if ( !empty($sb_instagram_width) ) $sb_instagram_styles .= 'width:' . $sb_instagram_width . $sb_instagram_width_unit .'; ';
     if ( !empty($sb_instagram_height) && $sb_instagram_height != '0' ) $sb_instagram_styles .= 'height:' . $sb_instagram_height . $sb_instagram_height_unit .'; ';
-    if ( !empty($sb_instagram_background) ) $sb_instagram_styles .= 'background-color: ' . $sb_instagram_background . '; ';
     if ( !empty($sb_instagram_image_padding) ) $sb_instagram_styles .= 'padding-bottom: ' . (2*intval($sb_instagram_image_padding)).$sb_instagram_image_padding_unit . '; ';
     $sb_instagram_styles .= '"';
 
@@ -110,8 +107,6 @@ function display_instagram($atts, $content = null) {
 
 	//As this is a new option in the update then set it to be true if it doesn't exist yet
 	if ( !array_key_exists( 'sb_instagram_show_bio', $options ) ) $sb_instagram_show_bio = 'true';
-    //Load more button
-    $sb_instagram_show_btn = false;
 
     //Mobile
     $sb_instagram_disable_mobile = $atts['disablemobile'];
@@ -219,30 +214,19 @@ function sb_instagram_scripts_enqueue() {
 //Custom CSS
 add_action( 'wp_head', 'sb_instagram_custom_css' );
 function sb_instagram_custom_css() {
-    $options = get_option('sb_instagram_settings');
-    
-    isset($options[ 'sb_instagram_custom_css' ]) ? $sb_instagram_custom_css = trim($options['sb_instagram_custom_css']) : $sb_instagram_custom_css = '';
+    //Show CSS if an admin (so can see Hide Photos link), or if hiding some photos
+	if (!current_user_can('manage_options')) {
+		return;
+	}
 
-    //Show CSS if an admin (so can see Hide Photos link), if including Custom CSS or if hiding some photos
-    ( current_user_can( 'manage_options' ) || !empty($sb_instagram_custom_css) ) ? $sbi_show_css = true : $sbi_show_css = false;
-
-    if( $sbi_show_css ) echo '<!-- Instagram Feed CSS -->';
-    if( $sbi_show_css ) echo "\r\n";
-    if( $sbi_show_css ) echo '<style type="text/css">';
-
-    if( !empty($sb_instagram_custom_css) ){
-        echo "\r\n";
-        echo stripslashes($sb_instagram_custom_css);
-    }
-
-    if( current_user_can( 'manage_options' ) ){
-        echo "\r\n";
-        echo "#sbi_mod_error{ display: block; }";
-    }
-
-    if( $sbi_show_css ) echo "\r\n";
-    if( $sbi_show_css ) echo '</style>';
-    if( $sbi_show_css ) echo "\r\n";
+    echo '<!-- Instagram Feed CSS -->';
+    echo "\r\n";
+    echo '<style type="text/css">';
+    echo "\r\n";
+    echo "#sbi_mod_error{ display: block; }";
+    echo "\r\n";
+    echo '</style>';
+    echo "\r\n";
 }
 
 
