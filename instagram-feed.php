@@ -38,8 +38,7 @@ function display_instagram($atts, $content = null) {
     $options = get_option('sb_instagram_settings');
     
     //Pass in shortcode attrbutes
-    $atts = shortcode_atts(
-    array(
+    $atts = shortcode_atts([
         'id' => isset($options[ 'sb_instagram_user_id' ]) ? $options[ 'sb_instagram_user_id' ] : '',
         'width' => isset($options[ 'sb_instagram_width' ]) ? $options[ 'sb_instagram_width' ] : '',
         'widthunit' => isset($options[ 'sb_instagram_width_unit' ]) ? $options[ 'sb_instagram_width_unit' ] : '',
@@ -67,7 +66,7 @@ function display_instagram($atts, $content = null) {
         'headercolor' => isset($options[ 'sb_instagram_header_color' ]) ? $options[ 'sb_instagram_header_color' ] : '',
         'class' => '',
         'ajaxtheme' => isset($options[ 'sb_instagram_ajax_theme' ]) ? $options[ 'sb_instagram_ajax_theme' ] : ''
-    ), $atts);
+    ], $atts);
 
 
     /******************* VARS ********************/

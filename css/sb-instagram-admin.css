@@ -168,40 +168,6 @@
 	content: "\f306";
 }
 
-/* Pro only notices */
-#sbi_admin .sbi_row{
-	display: block;
-	width: 100%;
-}
-#sbi_admin .sbi_pro,
-#sbi_admin .sbi_pro label{
-	color: #999 !important;
-}
-#sbi_admin .sbi_shortcode_table tr.sbi_pro{
-	background: #eacccc;
-}
-#sbi_admin .sbi_table_key{
-	display: block;
-	float: left;
-	width: 11px;
-	height: 11px;
-	border: 1px solid #999;
-	background: #eacccc;
-	margin: 3px 6px 0 0;
-}
-#sbi_admin .sbi_plugins_promo,
-#sbi_admin .sbi_share_plugin{
-	width: 100%;
-	float: left;
-	clear: both;
-}
-#sbi_admin .sbi_plugins_promo a{
-	color: #e34f0e;
-}
-#sbi_admin .sbi_share_plugin{
-	border-top: 1px solid #ccc;
-	margin: 20px 0 0 0;
-}
 
 /* Quick links */
 #sbi_admin .sb_instagram_contents_links{
@@ -461,26 +427,6 @@
     margin-top: -4px;
 }
 
-/* Pro header options - greyed out */
-#sbi_admin #sb_instagram_header_style_boxed_options{
-	display: block;
-	float: left;
-	clear: both;
-	overflow: hidden;
-	width: auto;
-	padding: 10px 10px 0 10px;
-	background: rgba(255,255,255,0.5);
-	font-size: 12px;
-	line-height: 22px;
-}
-#sbi_admin #sb_instagram_header_style_boxed_options label{
-	height: 25px;
-    display: inline-block;
-    line-height: 25px;
-    position: relative;
-    top: -10px;
-    margin-right: 10px;
-}
 /* Moderation settings */
 #sbi_admin .sbi_mod_manual_settings{
 	float: left;
@@ -522,49 +468,4 @@
 #sbi_admin .sbi_white_list_names_wrapper{
 	display: inline-block;
 	margin-right: 10px;
-}
-
-/* Show Pro Options button */
-#sbi_admin .sbi-show-pro{
-	margin-top: 10px;
-	text-align: center;
-}
-#sbi_admin .sbi-pro-options{
-	display: none;
-}
-#sbi_admin .sbi-upgrade-link{
-	margin: 25px 0 5px 0;
-}
-
-#sbi_admin .sbi_feed_type .sbi_note{
-	/*display: none;*/
-}
-
-#sbi_admin .sbi-pro-notice,
-#sbi_admin .sbi-pro-notice img{
-    display: block;
-    float: left;
-    clear: both;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-
-    -moz-transition: all 0.5s ease-in-out;
-    -webkit-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-}
-#sbi_admin .sbi-pro-notice img{
-    margin: 0;
-}
-#sbi_admin .sbi-pro-notice:hover{
-    opacity: 0.95;
-
-    -moz-transition: all 0.1s ease-in-out;
-    -webkit-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
 }
