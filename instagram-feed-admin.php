@@ -39,7 +39,6 @@ function sb_instagram_settings_page() {
         'sb_instagram_height'               => '',
         'sb_instagram_num'                  => '20',
         'sb_instagram_height_unit'          => '',
-        'sb_instagram_cols'                 => '4',
         'sb_instagram_image_padding'        => '5',
         'sb_instagram_image_padding_unit'   => 'px',
         'sb_instagram_sort'                 => 'none',
@@ -72,7 +71,6 @@ function sb_instagram_settings_page() {
     $sb_instagram_height = $options[ 'sb_instagram_height' ];
     $sb_instagram_height_unit = $options[ 'sb_instagram_height_unit' ];
     $sb_instagram_num = $options[ 'sb_instagram_num' ];
-    $sb_instagram_cols = $options[ 'sb_instagram_cols' ];
     $sb_instagram_image_padding = $options[ 'sb_instagram_image_padding' ];
     $sb_instagram_image_padding_unit = $options[ 'sb_instagram_image_padding_unit' ];
     $sb_instagram_sort = $options[ 'sb_instagram_sort' ];
@@ -133,8 +131,6 @@ function sb_instagram_settings_page() {
                 if ( strlen( $safe_num ) > 4 ) $safe_num = substr( $safe_num, 0, 4 );
                 $sb_instagram_num = $safe_num;
 
-                $sb_instagram_cols = sanitize_text_field( $_POST[ 'sb_instagram_cols' ] );
-
                 //Validate and sanitize padding field
                 $safe_padding = intval( sanitize_text_field( $_POST['sb_instagram_image_padding'] ) );
                 if ( ! $safe_padding ) $safe_padding = '';
@@ -163,7 +159,6 @@ function sb_instagram_settings_page() {
                 $options[ 'sb_instagram_height' ] = $sb_instagram_height;
                 $options[ 'sb_instagram_height_unit' ] = $sb_instagram_height_unit;
                 $options[ 'sb_instagram_num' ] = $sb_instagram_num;
-                $options[ 'sb_instagram_cols' ] = $sb_instagram_cols;
                 $options[ 'sb_instagram_image_padding' ] = $sb_instagram_image_padding;
                 $options[ 'sb_instagram_image_padding_unit' ] = $sb_instagram_image_padding_unit;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
@@ -348,13 +343,6 @@ function sb_instagram_settings_page() {
                         <input name="sb_instagram_num" type="number" value="<?php echo esc_attr( $sb_instagram_num ); ?>" min="1" max="33" size="4" maxlength="4">
                         &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e("Using multiple IDs or hashtags?", 'instagram-feed'); ?></a>
                             <p class="sbi_tooltip"><?php _e("If you're displaying photos from multiple User IDs or hashtags then this is the number of photos which will be displayed from each.", 'instagram-feed'); ?></p>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Number of Columns', 'instagram-feed'); ?></label><code class="sbi_shortcode"> cols
-                        Eg: cols=3</code></th>
-                    <td>
-                        <input name="sb_instagram_cols" type="number" min="1" max="10" value="<?= $sb_instagram_cols; ?>" size="4" maxlength="4">
                     </td>
                 </tr>
                 <tr valign="top">

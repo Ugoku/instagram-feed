@@ -45,16 +45,7 @@
 }
 
 /* Cols */
-#sb_instagram.sbi_col_1 #sbi_images .sbi_item{ width: 100%; }
-#sb_instagram.sbi_col_2 #sbi_images .sbi_item{ width: 50%; }
-#sb_instagram.sbi_col_3 #sbi_images .sbi_item{ width: 33.33%; }
-#sb_instagram.sbi_col_4 #sbi_images .sbi_item{ width: 25%; }
-#sb_instagram.sbi_col_5 #sbi_images .sbi_item{ width: 20%; }
-#sb_instagram.sbi_col_6 #sbi_images .sbi_item{ width: 16.66%; }
-#sb_instagram.sbi_col_7 #sbi_images .sbi_item{ width: 14.28%; }
-#sb_instagram.sbi_col_8 #sbi_images .sbi_item{ width: 12.5%; }
-#sb_instagram.sbi_col_9 #sbi_images .sbi_item{ width: 11.11%; }
-#sb_instagram.sbi_col_10 #sbi_images .sbi_item{ width: 10%; }
+#sb_instagram #sbi_images .sbi_item{ width: 100%; }
 
 /* Photos */
 #sb_instagram .sbi_photo_wrap{
@@ -343,36 +334,9 @@
 }
 
 /* Media queries */
-@media all and (max-width: 640px){
-    /* Make 3-6 cols into 2 col */
-    #sb_instagram.sbi_col_3 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_4 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_5 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_6 #sbi_images .sbi_item{
-        width: 50%;
-    }
-    /* Make 7-10 cols into 4 col */
-    #sb_instagram.sbi_col_7 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_8 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_9 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_10 #sbi_images .sbi_item{
-        width: 25%;
-    }
+@media all and (max-width: 640px) {
     /* On mobile make the min-width 100% */
     #sb_instagram.sbi_width_resp{
         width: 100% !important;
-    }
-}
-@media all and (max-width: 480px){
-    /* Make all cols into 1 col */
-    #sb_instagram.sbi_col_3 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_4 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_5 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_6 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_7 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_8 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_9 #sbi_images .sbi_item,
-    #sb_instagram.sbi_col_10 #sbi_images .sbi_item{
-        width: 100%;
     }
 }

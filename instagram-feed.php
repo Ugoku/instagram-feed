@@ -47,7 +47,6 @@ function display_instagram($atts, $content = null) {
         'heightunit' => $options[ 'sb_instagram_height_unit' ] ?? '',
         'sortby' => $options[ 'sb_instagram_sort' ] ?? '',
         'num' => $options[ 'sb_instagram_num' ] ?? '',
-        'cols' => $options[ 'sb_instagram_cols' ] ?? '',
         'imagepadding' => $options[ 'sb_instagram_image_padding' ] ?? '',
         'imagepaddingunit' => $options[ 'sb_instagram_image_padding_unit' ] ?? '',
         'showbutton' => false,
@@ -83,10 +82,9 @@ function display_instagram($atts, $content = null) {
     if( $atts[ 'widthresp' ] == 'false' ) $sb_instagram_width_resp = false;
 
     //Layout options
-    $sb_instagram_cols = $atts['cols'];
 
     $sb_instagram_styles = 'style="';
-    if($sb_instagram_cols == 1) $sb_instagram_styles .= 'max-width: 640px; ';
+    $sb_instagram_styles .= 'max-width: 640px; ';
     if ( !empty($sb_instagram_width) ) $sb_instagram_styles .= 'width:' . $sb_instagram_width . $sb_instagram_width_unit .'; ';
     if ( !empty($sb_instagram_height) && $sb_instagram_height != '0' ) $sb_instagram_styles .= 'height:' . $sb_instagram_height . $sb_instagram_height_unit .'; ';
     if ( !empty($sb_instagram_image_padding) ) $sb_instagram_styles .= 'padding-bottom: ' . (2*intval($sb_instagram_image_padding)).$sb_instagram_image_padding_unit . '; ';
@@ -118,13 +116,12 @@ function display_instagram($atts, $content = null) {
 
     $sb_instagram_content = '<div id="sb_instagram" class="sbi' . $sbi_class;
     if ( !empty($sb_instagram_height) ) $sb_instagram_content .= ' sbi_fixed_height ';
-    $sb_instagram_content .= ' sbi_col_' . trim($sb_instagram_cols);
     if ( $sb_instagram_width_resp ) $sb_instagram_content .= ' sbi_width_resp';
     $sb_instagram_content .=
 	    '" '.$sb_instagram_styles .
         ' data-id="' . $sb_instagram_user_id .
 	    '" data-num="' . trim($atts['num']) .
-	    '" data-res="auto" data-cols="' . trim($sb_instagram_cols) .
+	    '" data-res="auto' .
 	    '" data-options=\'{&quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot;, &quot;imagepadding&quot;: &quot;'.$sb_instagram_image_padding.'&quot;}\'>';
 
     //Header
@@ -156,7 +153,7 @@ function display_instagram($atts, $content = null) {
     //If using an ajax theme then add the JS to the bottom of the feed
     if ($sb_instagram_ajax_theme){
         $sb_instagram_content .= '<script>var sb_instagram_js_options = { sb_instagram_at: "' . trim($options['sb_instagram_at']) . '" };</script>';
-        $sb_instagram_content .= '<script src="' . plugins_url('/js/sb-instagram.min.js?ver=' . SBIVER , __FILE__) . '"></script>';
+        $sb_instagram_content .= '<script src="' . plugins_url('/js/sb-instagram.js?ver=' . SBIVER , __FILE__) . '"></script>';
     }
  
     //Return our feed HTML to display
@@ -172,7 +169,7 @@ add_filter('widget_text', 'do_shortcode');
 //Enqueue stylesheet
 add_action( 'wp_enqueue_scripts', 'sb_instagram_styles_enqueue' );
 function sb_instagram_styles_enqueue() {
-    wp_register_style( 'sb_instagram_styles', plugins_url('css/sb-instagram.min.css', __FILE__), [], SBIVER );
+    wp_register_style( 'sb_instagram_styles', plugins_url('css/sb-instagram.css', __FILE__), [], SBIVER );
     wp_enqueue_style( 'sb_instagram_styles' );
 
     $options = get_option('sb_instagram_settings');
@@ -186,7 +183,7 @@ function sb_instagram_styles_enqueue() {
 add_action( 'wp_enqueue_scripts', 'sb_instagram_scripts_enqueue' );
 function sb_instagram_scripts_enqueue() {
     //Register the script to make it available
-    wp_register_script( 'sb_instagram_scripts', plugins_url( '/js/sb-instagram.min.js' , __FILE__ ), [ 'jquery' ], SBIVER, true ); //http://www.minifier.org/
+    wp_register_script( 'sb_instagram_scripts', plugins_url( '/js/sb-instagram.js' , __FILE__ ), [ 'jquery' ], SBIVER, true ); //http://www.minifier.org/
 
     //Options to pass to JS file
     $sb_instagram_settings = get_option('sb_instagram_settings');
