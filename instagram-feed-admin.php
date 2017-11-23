@@ -33,12 +33,7 @@ function sb_instagram_settings_page() {
         'sb_instagram_user_id'              => '',
         'sb_instagram_preserve_settings'    => '',
         'sb_instagram_ajax_theme'           => false,
-        'sb_instagram_width'                => '100',
-        'sb_instagram_width_unit'           => '%',
-        'sb_instagram_feed_width_resp'      => false,
-        'sb_instagram_height'               => '',
         'sb_instagram_num'                  => '20',
-        'sb_instagram_height_unit'          => '',
         'sb_instagram_sort'                 => 'none',
         'sb_instagram_btn_background'       => '',
         'sb_instagram_btn_text_color'       => '',
@@ -60,11 +55,6 @@ function sb_instagram_settings_page() {
     $sb_instagram_user_id = $options[ 'sb_instagram_user_id' ];
     $sb_instagram_preserve_settings = $options[ 'sb_instagram_preserve_settings' ];
     $sb_instagram_ajax_theme = $options[ 'sb_instagram_ajax_theme' ];
-    $sb_instagram_width = $options[ 'sb_instagram_width' ];
-    $sb_instagram_width_unit = $options[ 'sb_instagram_width_unit' ];
-    $sb_instagram_feed_width_resp = $options[ 'sb_instagram_feed_width_resp' ];
-    $sb_instagram_height = $options[ 'sb_instagram_height' ];
-    $sb_instagram_height_unit = $options[ 'sb_instagram_height_unit' ];
     $sb_instagram_num = $options[ 'sb_instagram_num' ];
     $sb_instagram_sort = $options[ 'sb_instagram_sort' ];
     //Header
@@ -95,23 +85,6 @@ function sb_instagram_settings_page() {
 
             if( isset($_POST[ $sb_instagram_customize_hidden_field ]) && $_POST[ $sb_instagram_customize_hidden_field ] == 'Y' ) {
                 
-                //Validate and sanitize width field
-                $safe_width = intval( sanitize_text_field( $_POST['sb_instagram_width'] ) );
-                if ( ! $safe_width ) $safe_width = '';
-                if ( strlen( $safe_width ) > 4 ) $safe_width = substr( $safe_width, 0, 4 );
-                $sb_instagram_width = $safe_width;
-
-                $sb_instagram_width_unit = sanitize_text_field( $_POST[ 'sb_instagram_width_unit' ] );
-                isset($_POST[ 'sb_instagram_feed_width_resp' ]) ? $sb_instagram_feed_width_resp = sanitize_text_field( $_POST[ 'sb_instagram_feed_width_resp' ] ) : $sb_instagram_feed_width_resp = '';
-
-                //Validate and sanitize height field
-                $safe_height = intval( sanitize_text_field( $_POST['sb_instagram_height'] ) );
-                if ( ! $safe_height ) $safe_height = '';
-                if ( strlen( $safe_height ) > 4 ) $safe_height = substr( $safe_height, 0, 4 );
-                $sb_instagram_height = $safe_height;
-
-                $sb_instagram_height_unit = sanitize_text_field( $_POST[ 'sb_instagram_height_unit' ] );
-
                 //Validate and sanitize number of photos field
                 $safe_num = intval( sanitize_text_field( $_POST['sb_instagram_num'] ) );
                 if ( ! $safe_num ) $safe_num = '';
@@ -130,11 +103,6 @@ function sb_instagram_settings_page() {
                 $sb_instagram_follow_btn_text_color = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text_color' ] );
                 $sb_instagram_follow_btn_text = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text' ] );
 
-                $options[ 'sb_instagram_width' ] = $sb_instagram_width;
-                $options[ 'sb_instagram_width_unit' ] = $sb_instagram_width_unit;
-                $options[ 'sb_instagram_feed_width_resp' ] = $sb_instagram_feed_width_resp;
-                $options[ 'sb_instagram_height' ] = $sb_instagram_height;
-                $options[ 'sb_instagram_height_unit' ] = $sb_instagram_height_unit;
                 $options[ 'sb_instagram_num' ] = $sb_instagram_num;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
                 //Header
@@ -256,52 +224,10 @@ function sb_instagram_settings_page() {
 
     <?php if( $sbi_active_tab == 'customize' ) { //Start Configure tab ?>
 
-    <p class="sb_instagram_contents_links" id="general">
-        <span><?php _e( 'Quick links:', 'instagram-feed' ); ?> </span>
-        <a href="#general"><?php _e( 'General', 'instagram-feed' ); ?></a>
-        <a href="#layout"><?php _e( 'Layout', 'instagram-feed' ); ?></a>
-        <a href="#photos"><?php _e( 'Photos', 'instagram-feed' ); ?></a>
-        <a href="#headeroptions"><?php _e( 'Header', 'instagram-feed' ); ?></a>
-    </p>
-
     <input type="hidden" name="<?php echo $sb_instagram_customize_hidden_field; ?>" value="Y">
 
-        <h3><?php _e( 'General', 'instagram-feed' ); ?></h3>
-
-        <table class="form-table">
-            <tbody>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Width of Feed', 'instagram-feed'); ?></label><code class="sbi_shortcode"> width  widthunit
-                        Eg: width=50 widthunit=%</code></th>
-                    <td>
-                        <input name="sb_instagram_width" type="number" value="<?php echo esc_attr( $sb_instagram_width ); ?>" id="sb_instagram_width" size="4" maxlength="4">
-                        <select name="sb_instagram_width_unit" id="sb_instagram_width_unit">
-                            <option value="px" <?php if($sb_instagram_width_unit == "px") echo 'selected="selected"' ?> ><?php _e('px', 'instagram-feed'); ?></option>
-                            <option value="%" <?php if($sb_instagram_width_unit == "%") echo 'selected="selected"' ?> ><?php _e('%', 'instagram-feed'); ?></option>
-                        </select>
-                        <div id="sb_instagram_width_options">
-                            <input name="sb_instagram_feed_width_resp" type="checkbox" id="sb_instagram_feed_width_resp" <?php if($sb_instagram_feed_width_resp == true) echo "checked"; ?> /><label for="sb_instagram_feed_width_resp"><?php _e('Set to be 100% width on mobile?', 'instagram-feed'); ?></label>
-                            <a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e( 'What does this mean?', 'instagram-feed' ); ?></a>
-                            <p class="sbi_tooltip"><?php _e("If you set a width on the feed then this will be used on mobile as well as desktop. Check this setting to set the feed width to be 100% on mobile so that it is responsive.", 'instagram-feed'); ?></p>
-                        </div>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e('Height of Feed', 'instagram-feed'); ?></label><code class="sbi_shortcode"> height  heightunit
-                        Eg: height=500 heightunit=px</code></th>
-                    <td>
-                        <input name="sb_instagram_height" type="number" value="<?php echo esc_attr( $sb_instagram_height ); ?>" size="4" maxlength="4">
-                        <select name="sb_instagram_height_unit">
-                            <option value="px" <?php if($sb_instagram_height_unit == "px") echo 'selected="selected"' ?> ><?php _e('px', 'instagram-feed'); ?></option>
-                            <option value="%" <?php if($sb_instagram_height_unit == "%") echo 'selected="selected"' ?> ><?php _e('%', 'instagram-feed'); ?></option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <hr id="layout" />
-        <h3><?php _e('Layout', 'instagram-feed'); ?></h3>
+        <hr id="photos" />
+        <h3><?php _e('Photos', 'instagram-feed'); ?></h3>
 
         <table class="form-table">
             <tbody>
@@ -314,16 +240,6 @@ function sb_instagram_settings_page() {
                             <p class="sbi_tooltip"><?php _e("If you're displaying photos from multiple User IDs or hashtags then this is the number of photos which will be displayed from each.", 'instagram-feed'); ?></p>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-
-        <?php submit_button(); ?>
-
-        <hr id="photos" />
-        <h3><?php _e('Photos', 'instagram-feed'); ?></h3>
-
-        <table class="form-table">
-            <tbody>
                 <tr valign="top">
                     <th scope="row"><label><?php _e('Sort Photos By', 'instagram-feed'); ?></label><code class="sbi_shortcode"> sortby
                         Eg: sortby=random</code></th>
@@ -336,6 +252,8 @@ function sb_instagram_settings_page() {
                 </tr>
             </tbody>
         </table>
+
+        <?php submit_button(); ?>
 
         <hr id="headeroptions">
         <h3><?php _e("Header", 'instagram-feed'); ?></h3>
@@ -404,26 +322,6 @@ function sb_instagram_settings_page() {
                 </tr>
 
                 <tr class="sbi_table_header"><td colspan=3><?php _e("Customize Options", 'instagram-feed'); ?></td></tr>
-                <tr>
-                    <td>width</td>
-                    <td><?php _e("The width of your feed. Any number.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed width=50]</code></td>
-                </tr>
-                <tr>
-                    <td>widthunit</td>
-                    <td><?php _e("The unit of the width. 'px' or '%'", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed widthunit=%]</code></td>
-                </tr>
-                <tr>
-                    <td>height</td>
-                    <td><?php _e("The height of your feed. Any number.", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed height=250]</code></td>
-                </tr>
-                <tr>
-                    <td>heightunit</td>
-                    <td><?php _e("The unit of the height. 'px' or '%'", 'instagram-feed'); ?></td>
-                    <td><code>[instagram-feed heightunit=px]</code></td>
-                </tr>
                 <tr>
                     <td>class</td>
                     <td><?php _e("Add a CSS class to the feed container", 'instagram-feed'); ?></td>

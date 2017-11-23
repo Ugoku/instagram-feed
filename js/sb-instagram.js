@@ -8,7 +8,7 @@ if (!sbi_js_exists) {
         // used to track multiple feeds on the page
         window.sbiFeedMeta = {};
 
-        jQuery('#sb_instagram.sbi').each(function($i){
+        jQuery('#sb_instagram.sbi').each(function($i) {
 
             var $self = jQuery(this),
                 $target = $self.find('#sbi_images'),
@@ -31,31 +31,39 @@ if (!sbi_js_exists) {
                 'idsInFeed' : []
             };
 
-            if( feedOptions.sortby !== '' ) sortby = feedOptions.sortby;
+            if (feedOptions.sortby !== '') {
+                sortby = feedOptions.sortby;
+            }
 
-            switch( this.getAttribute('data-res') ) {
+            switch (this.getAttribute('data-res')) {
                 case 'auto':
                     var feedWidth = $self.innerWidth(),
                         colWidth = $self.innerWidth() / cols;
 
                     //Check if page width is less than 640. If it is then use the script above
                     var sbiWindowWidth = jQuery(window).width();
-                    if( sbiWindowWidth < 640 ){
+                    if (sbiWindowWidth < 640) {
                         //Need this for mobile so that image res is right on mobile, as the number of cols isn't always accurate on mobile as they are changed using CSS
-                        if( (feedWidth > 320 && feedWidth < 480) && sbiWindowWidth < 480 ) colWidth = 480; //Use full size images
-                        if( feedWidth < 320 && sbiWindowWidth < 480 ) colWidth = 300; //Use medium size images
+                        if ((feedWidth > 320 && feedWidth < 480) && sbiWindowWidth < 480) {
+                            colWidth = 480; //Use full size images
+                        }
+                        if (feedWidth < 320 && sbiWindowWidth < 480) {
+                            colWidth = 300; //Use medium size images
+                        }
                     }
 
-                    if( colWidth < 150 ){
+                    if (colWidth < 150) {
                         imgRes = 'thumbnail';
-                    } else if( colWidth < 320 ){
+                    } else if (colWidth < 320) {
                         imgRes = 'low_resolution';
                     } else {
                         imgRes = 'standard_resolution';
                     }
 
                     //If the feed is hidden (eg; in a tab) then the width is returned as 100, and so auto set the res to be medium to cover most bases
-                    if( feedWidth <= 100 ) imgRes = 'low_resolution';
+                    if (feedWidth <= 100) {
+                        imgRes = 'low_resolution';
+                    }
 
                     break;
                 case 'thumb':
@@ -86,9 +94,13 @@ if (!sbi_js_exists) {
                         $header = '<a href="https://instagram.com/' + data.data.username + '" target="_blank" title="@' + data.data.username + '" class="sbi_header_link">';
                         $header += '<div class="sbi_header_text">';
                         $header += '<h3 ' + headerStyles;
-                        if (data.data.bio.length == 0 || feedOptions.showbio !== "true") $header += ' class="sbi_no_bio"';
+                        if (data.data.bio.length == 0 || feedOptions.showbio !== "true") {
+                            $header += ' class="sbi_no_bio"';
+                        }
                         $header += '>@' + data.data.username + '</h3>';
-                        if (data.data.bio.length && feedOptions.showbio === "true") $header += '<p class="sbi_bio" ' + headerStyles + '>' + data.data.bio + '</p>';
+                        if (data.data.bio.length && feedOptions.showbio === "true") {
+                            $header += '<p class="sbi_bio" ' + headerStyles + '>' + data.data.bio + '</p>';
+                        }
                         $header += '</div>';
                         $header += '<div class="sbi_header_img">';
                         $header += '<div class="sbi_header_img_hover"><i></i></div>';
@@ -125,7 +137,9 @@ if (!sbi_js_exists) {
 
                         //Remove all special chars in caption so doesn't cause issue in alt tag
                         //Always check to make sure it exists
-                        if(image.caption != null) image.caption.text = image.caption.text.replace(/[^a-zA-Z ]/g, "");
+                        if (image.caption != null) {
+                            image.caption.text = image.caption.text.replace(/[^a-zA-Z ]/g, "");
+                        }
 
                         //Remove caching key from image sources to prevent duplicate content issue
                         image.images.thumbnail.url = image.images.thumbnail.url.split("?ig_cache_key")[0];
@@ -141,12 +155,11 @@ if (!sbi_js_exists) {
                         $self.find('.sbi_loader').remove();
 
                         /* Load more button */
-                        if (this.hasNext())
+                        if (this.hasNext()) {
                             morePosts.push('1');
+                        }
 
-                        $self.css('padding-bottom', 0);
-
-                        if( imgRes !== 'thumbnail' ){
+                        if (imgRes !== 'thumbnail') {
                             //This needs to be here otherwise it results in the following error for some sites: $self.find(...).sbi_imgLiquid() is not a function.
                             /*! imgLiquid v0.9.944 / 03-05-2013 https://github.com/karacas/imgLiquid */
                             var sbi_imgLiquid=sbi_imgLiquid||{VER:"0.9.944"};sbi_imgLiquid.bgs_Available=!1,sbi_imgLiquid.bgs_CheckRunned=!1,function(i){function t(){if(!sbi_imgLiquid.bgs_CheckRunned){sbi_imgLiquid.bgs_CheckRunned=!0;var t=i('<span style="background-size:cover" />');i("body").append(t),!function(){var i=t[0];if(i&&window.getComputedStyle){var e=window.getComputedStyle(i,null);e&&e.backgroundSize&&(sbi_imgLiquid.bgs_Available="cover"===e.backgroundSize)}}(),t.remove()}}i.fn.extend({sbi_imgLiquid:function(e){this.defaults={fill:!0,verticalAlign:"center",horizontalAlign:"center",useBackgroundSize:!0,useDataHtmlAttr:!0,responsive:!0,delay:0,fadeInTime:0,removeBoxBackground:!0,hardPixels:!0,responsiveCheckTime:500,timecheckvisibility:500,onStart:null,onFinish:null,onItemStart:null,onItemFinish:null,onItemError:null},t();var a=this;return this.options=e,this.settings=i.extend({},this.defaults,this.options),this.settings.onStart&&this.settings.onStart(),this.each(function(t){function e(){-1===u.css("background-image").indexOf(encodeURI(c.attr("src")))&&u.css({"background-image":'url("'+encodeURI(c.attr("src"))+'")'}),u.css({"background-size":g.fill?"cover":"contain","background-position":(g.horizontalAlign+" "+g.verticalAlign).toLowerCase(),"background-repeat":"no-repeat"}),i("a:first",u).css({display:"block",width:"100%",height:"100%"}),i("img",u).css({display:"none"}),g.onItemFinish&&g.onItemFinish(t,u,c),u.addClass("sbi_imgLiquid_bgSize"),u.addClass("sbi_imgLiquid_ready"),l()}function o(){function e(){c.data("sbi_imgLiquid_error")||c.data("sbi_imgLiquid_loaded")||c.data("sbi_imgLiquid_oldProcessed")||(u.is(":visible")&&c[0].complete&&c[0].width>0&&c[0].height>0?(c.data("sbi_imgLiquid_loaded",!0),setTimeout(r,t*g.delay)):setTimeout(e,g.timecheckvisibility))}if(c.data("oldSrc")&&c.data("oldSrc")!==c.attr("src")){var a=c.clone().removeAttr("style");return a.data("sbi_imgLiquid_settings",c.data("sbi_imgLiquid_settings")),c.parent().prepend(a),c.remove(),c=a,c[0].width=0,void setTimeout(o,10)}return c.data("sbi_imgLiquid_oldProcessed")?void r():(c.data("sbi_imgLiquid_oldProcessed",!1),c.data("oldSrc",c.attr("src")),i("img:not(:first)",u).css("display","none"),u.css({overflow:"hidden"}),c.fadeTo(0,0).removeAttr("width").removeAttr("height").css({visibility:"visible","max-width":"none","max-height":"none",width:"auto",height:"auto",display:"block"}),c.on("error",n),c[0].onerror=n,e(),void d())}function d(){(g.responsive||c.data("sbi_imgLiquid_oldProcessed"))&&c.data("sbi_imgLiquid_settings")&&(g=c.data("sbi_imgLiquid_settings"),u.actualSize=u.get(0).offsetWidth+u.get(0).offsetHeight/1e4,u.sizeOld&&u.actualSize!==u.sizeOld&&r(),u.sizeOld=u.actualSize,setTimeout(d,g.responsiveCheckTime))}function n(){c.data("sbi_imgLiquid_error",!0),u.addClass("sbi_imgLiquid_error"),g.onItemError&&g.onItemError(t,u,c),l()}function s(){var i={};if(a.settings.useDataHtmlAttr){var t=u.attr("data-sbi_imgLiquid-fill"),e=u.attr("data-sbi_imgLiquid-horizontalAlign"),o=u.attr("data-sbi_imgLiquid-verticalAlign");("true"===t||"false"===t)&&(i.fill=Boolean("true"===t)),void 0===e||"left"!==e&&"center"!==e&&"right"!==e&&-1===e.indexOf("%")||(i.horizontalAlign=e),void 0===o||"top"!==o&&"bottom"!==o&&"center"!==o&&-1===o.indexOf("%")||(i.verticalAlign=o)}return sbi_imgLiquid.isIE&&a.settings.ieFadeInDisabled&&(i.fadeInTime=0),i}function r(){var i,e,a,o,d,n,s,r,m=0,h=0,f=u.width(),v=u.height();void 0===c.data("owidth")&&c.data("owidth",c[0].width),void 0===c.data("oheight")&&c.data("oheight",c[0].height),g.fill===f/v>=c.data("owidth")/c.data("oheight")?(i="100%",e="auto",a=Math.floor(f),o=Math.floor(f*(c.data("oheight")/c.data("owidth")))):(i="auto",e="100%",a=Math.floor(v*(c.data("owidth")/c.data("oheight"))),o=Math.floor(v)),d=g.horizontalAlign.toLowerCase(),s=f-a,"left"===d&&(h=0),"center"===d&&(h=.5*s),"right"===d&&(h=s),-1!==d.indexOf("%")&&(d=parseInt(d.replace("%",""),10),d>0&&(h=s*d*.01)),n=g.verticalAlign.toLowerCase(),r=v-o,"left"===n&&(m=0),"center"===n&&(m=.5*r),"bottom"===n&&(m=r),-1!==n.indexOf("%")&&(n=parseInt(n.replace("%",""),10),n>0&&(m=r*n*.01)),g.hardPixels&&(i=a,e=o),c.css({width:i,height:e,"margin-left":Math.floor(h),"margin-top":Math.floor(m)}),c.data("sbi_imgLiquid_oldProcessed")||(c.fadeTo(g.fadeInTime,1),c.data("sbi_imgLiquid_oldProcessed",!0),g.removeBoxBackground&&u.css("background-image","none"),u.addClass("sbi_imgLiquid_nobgSize"),u.addClass("sbi_imgLiquid_ready")),g.onItemFinish&&g.onItemFinish(t,u,c),l()}function l(){t===a.length-1&&a.settings.onFinish&&a.settings.onFinish()}var g=a.settings,u=i(this),c=i("img:first",u);return c.length?(c.data("sbi_imgLiquid_settings")?(u.removeClass("sbi_imgLiquid_error").removeClass("sbi_imgLiquid_ready"),g=i.extend({},c.data("sbi_imgLiquid_settings"),a.options)):g=i.extend({},a.settings,s()),c.data("sbi_imgLiquid_settings",g),g.onItemStart&&g.onItemStart(t,u,c),void(sbi_imgLiquid.bgs_Available&&g.useBackgroundSize?e():o())):void n()})}})}(jQuery);
@@ -176,33 +189,28 @@ if (!sbi_js_exists) {
                             };
                         })();
 
-                        jQuery(window).resize(function(){
-                            sbi_delay(function(){
+                        jQuery(window).resize(function() {
+                            sbi_delay(function() {
                                 sbiSetPhotoHeight();
                             }, 500);
                         });
 
                         //Resize image height
-                        function sbiSetPhotoHeight(){
+                        function sbiSetPhotoHeight() {
 
-                            if( imgRes !== 'thumbnail' ){
+                            if (imgRes !== 'thumbnail') {
                                 var sbi_photo_width = $self.find('.sbi_photo').eq(0).innerWidth();
 
                                 //Figure out number of columns for either desktop or mobile
-                                var sbi_num_cols = parseInt(cols);
-
-                                if( !$self.hasClass('sbi_disable_mobile') ){
-                                    var sbiWindowWidth = jQuery(window).width();
-                                    if( sbiWindowWidth < 640 && (parseInt(cols) > 2 && parseInt(cols) < 7 ) ) sbi_num_cols = 2;
-                                    if( sbiWindowWidth < 640 && (parseInt(cols) > 6 && parseInt(cols) < 11 ) ) sbi_num_cols = 4;
-                                    if( sbiWindowWidth <= 480 && parseInt(cols) > 2 ) sbi_num_cols = 1;
-                                  }
+                                var sbiWindowWidth = jQuery(window).width();
 
                                 //Figure out what the width should be using the number of cols
-                                var sbi_photo_width_manual = ( $self.find('#sbi_images').width() / sbi_num_cols );
+                                var sbi_photo_width_manual = $self.find('#sbi_images').width();
 
                                 //If the width is less than it should be then set it manually
-                                if( sbi_photo_width <= (sbi_photo_width_manual) ) sbi_photo_width = sbi_photo_width_manual;
+                                if (sbi_photo_width <= sbi_photo_width_manual) {
+                                    sbi_photo_width = sbi_photo_width_manual;
+                                }
 
                                 $self.find('.sbi_photo').css('height', sbi_photo_width);
                             }
@@ -232,9 +240,10 @@ if (!sbi_js_exists) {
                             });
 
                             //Add video icon to videos
-                            if( $sbi_photo.closest('.sbi_item').hasClass('sbi_type_video') ){
-                                if( !$sbi_photo.find('.sbi_playbtn').length )
+                            if ($sbi_photo.closest('.sbi_item').hasClass('sbi_type_video')) {
+                                if (!$sbi_photo.find('.sbi_playbtn').length) {
                                     $sbi_photo.append('<i class="fa fa-play sbi_playbtn"></i>');
+                                }
                             }
                         });
 
@@ -244,7 +253,7 @@ if (!sbi_js_exists) {
                             var aComp = jQuery(a).data('date'),
                                 bComp = jQuery(b).data('date');
 
-                            if(sortby == 'none'){
+                            if (sortby === 'none') {
                                 //Order by date
                                 return bComp - aComp;
                             } else {
@@ -264,9 +273,9 @@ if (!sbi_js_exists) {
                         function sbiGetItemSize(){
                           $self.removeClass('sbi_small sbi_medium');
                           var sbiItemWidth = $self.find('.sbi_item').innerWidth();
-                          if( sbiItemWidth > 120 && sbiItemWidth < 240 ){
+                          if (sbiItemWidth > 120 && sbiItemWidth < 240) {
                               $self.addClass('sbi_medium');
-                          } else if( sbiItemWidth <= 120 ){
+                          } else if(sbiItemWidth <= 120) {
                               $self.addClass('sbi_small');
                           }
                         }
@@ -278,12 +287,12 @@ if (!sbi_js_exists) {
                             sbiErrorDir = '',
                             sbiErrorResponse = data;
 
-                        if( sbiErrorResponse.indexOf('access_token') > -1 ){
+                        if (sbiErrorResponse.indexOf('access_token') > -1) {
                             sbiErrorMsg += '<p><b>Error: Access Token is not valid or has expired</b><br /><span>This error message is only visible to WordPress admins</span>';
                             sbiErrorDir = "<p>There's an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin's Settings page.<br />If you continue to have an issue with your Access Token then please see <a href='https://smashballoon.com/my-instagram-access-token-keep-expiring/' target='_blank'>this FAQ</a> for more information.";
                             jQuery('#sb_instagram').empty().append( '<p style="text-align: center;">Unable to show Instagram photos</p><div id="sbi_mod_error">' + sbiErrorMsg + sbiErrorDir + '</div>');
                             return;
-                        } else if( sbiErrorResponse.indexOf('user does not exist') > -1 || sbiErrorResponse.indexOf('you cannot view this resource') > -1 ){
+                        } else if (sbiErrorResponse.indexOf('user does not exist') > -1 || sbiErrorResponse.indexOf('you cannot view this resource') > -1) {
                             window.sbiFeedMeta[$i].error = {
                                 errorMsg    : '<p><b>Error: User ID <span class="sbiErrorIds">'+window.sbiFeedMeta[$i].idsInFeed[index]+'</span> does not exist, is invalid, or is private</b><br /><span>This error is only visible to WordPress admins</span>',
                                 errorDir    : "<p>Please double check the Instagram User ID that you are using and ensure that it is valid and not from a private account. To find your User ID simply enter your Instagram user name into this <a href='https://smashballoon.com/instagram-feed/find-instagram-user-id/' target='_blank'>tool</a>.</p>"

@@ -40,11 +40,6 @@ function display_instagram($atts, $content = null) {
     //Pass in shortcode attrbutes
     $atts = shortcode_atts([
         'id' => $options[ 'sb_instagram_user_id' ] ?? '',
-        'width' => $options[ 'sb_instagram_width' ] ?? '',
-        'widthunit' => $options[ 'sb_instagram_width_unit' ] ?? '',
-        'widthresp' => $options[ 'sb_instagram_feed_width_resp' ] ?? '',
-        'height' => $options[ 'sb_instagram_height' ] ?? '',
-        'heightunit' => $options[ 'sb_instagram_height_unit' ] ?? '',
         'sortby' => $options[ 'sb_instagram_sort' ] ?? '',
         'num' => $options[ 'sb_instagram_num' ] ?? '',
         'showbutton' => false,
@@ -65,25 +60,6 @@ function display_instagram($atts, $content = null) {
 		$at_arr = isset( $sb_instagram_settings[ 'sb_instagram_at' ] ) ? explode( '.', trim( $sb_instagram_settings[ 'sb_instagram_at' ] ), 2) : [];
 		$sb_instagram_user_id = $at_arr[0];
 	}
-
-    //Container styles
-    $sb_instagram_width = $atts['width'];
-    $sb_instagram_width_unit = $atts['widthunit'];
-    $sb_instagram_height = $atts['height'];
-    $sb_instagram_height_unit = $atts['heightunit'];
-
-    //Set to be 100% width on mobile?
-    $sb_instagram_width_resp = $atts[ 'widthresp' ];
-    ( $sb_instagram_width_resp == 'on' || $sb_instagram_width_resp == 'true' || $sb_instagram_width_resp == true ) ? $sb_instagram_width_resp = true : $sb_instagram_width_resp = false;
-    if( $atts[ 'widthresp' ] == 'false' ) $sb_instagram_width_resp = false;
-
-    //Layout options
-
-    $sb_instagram_styles = 'style="';
-    $sb_instagram_styles .= 'max-width: 640px; ';
-    if ( !empty($sb_instagram_width) ) $sb_instagram_styles .= 'width:' . $sb_instagram_width . $sb_instagram_width_unit .'; ';
-    if ( !empty($sb_instagram_height) && $sb_instagram_height != '0' ) $sb_instagram_styles .= 'height:' . $sb_instagram_height . $sb_instagram_height_unit .'; ';
-    $sb_instagram_styles .= '"';
 
     //Header
     $sb_instagram_show_header = $atts['showheader'];
@@ -110,11 +86,8 @@ function display_instagram($atts, $content = null) {
     /******************* CONTENT ********************/
 
     $sb_instagram_content = '<div id="sb_instagram" class="sbi' . $sbi_class;
-    if ( !empty($sb_instagram_height) ) $sb_instagram_content .= ' sbi_fixed_height ';
-    if ( $sb_instagram_width_resp ) $sb_instagram_content .= ' sbi_width_resp';
     $sb_instagram_content .=
-	    '" '.$sb_instagram_styles .
-        ' data-id="' . $sb_instagram_user_id .
+	    '" data-id="' . $sb_instagram_user_id .
 	    '" data-num="' . trim($atts['num']) .
 	    '" data-res="auto' .
 	    '" data-options=\'{ &quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot; }\'>';
@@ -214,6 +187,7 @@ function sb_instagram_custom_css() {
     echo '</style>';
     echo "\r\n";
 }
+
 
 
 if ( ! function_exists( 'sb_remove_style_version' ) ) {

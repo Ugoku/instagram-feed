@@ -76,10 +76,6 @@ See the table below for a full list of available shortcode options:
 = Shortcode Options =
 * **General Options**
 * **id** - An Instagram User ID - Example: `[instagram-feed id=AN_INSTAGRAM_USER_ID]`
-* **width** - The width of your Instagram feed. Any number - Example: `[instagram-feed width=50]`
-* **widthunit** - The unit of the width of your Instagram feed. 'px' or '%' - Example: `[instagram-feed widthunit=%]`
-* **height** - The height of your Instagram feed. Any number - Example: `[instagram-feed height=250]`
-* **heightunit** - The unit of the height of your Instagram feed. 'px' or '%' - Example: `[instagram-feed heightunit=px]`
 * **background** - The background color of the Instagram feed. Any hex color code - Example: `[instagram-feed background=#ffff00]`
 * **class** - Add a CSS class to the Instagram feed container - Example: `[instagram-feed class=feedOne]`
 *
@@ -199,10 +195,6 @@ The below options are available on the Instagram Feed Settings page but can also
 
 * **General Options**
 * **id** - An Instagram User ID - Example: `[instagram-feed id=AN_INSTAGRAM_USER_ID]`
-* **width** - The width of your Instagram feed. Any number - Example: `[instagram-feed width=50]`
-* **widthunit** - The unit of the width of your Instagram feed. 'px' or '%' - Example: `[instagram-feed widthunit=%]`
-* **height** - The height of your Instagram feed. Any number - Example: `[instagram-feed height=250]`
-* **heightunit** - The unit of the height of your Instagram feed. 'px' or '%' - Example: `[instagram-feed heightunit=px]`
 * **background** - The background color of the Instagram feed. Any hex color code - Example: `[instagram-feed background=#ffff00]`
 * **class** - Add a CSS class to the Instagram feed container - Example: `[instagram-feed class=feedOne]`
 *

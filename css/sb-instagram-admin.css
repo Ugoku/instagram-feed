@@ -147,36 +147,6 @@
 	content: "\f306";
 }
 
-
-/* Quick links */
-#sbi_admin .sb_instagram_contents_links{
-	float: left;
-	clear: both;
-	width: 100%;
-	padding-bottom: 12px;
-	border-bottom: 1px solid #ccc;
-	margin-bottom: 15px;
-}
-#sbi_admin .sb_instagram_contents_links a,
-#sbi_admin .sb_instagram_contents_links span{
-	display: block;
-	float: left;
-	padding: 2px 5px;
-}
-#sbi_admin .sb_instagram_contents_links span{
-	padding-left: 0;
-}
-
-#sbi_admin #sb_instagram_width_options{
-	margin-top: 5px;
-	display: none;
-}
-#sbi_admin #sb_instagram_width_options label {
-	font-size: 13px;
-	position: relative;
-	top: -2px;
-}
-
 /* Shortcode labels */
 #sbi_admin label{
 	position: relative;

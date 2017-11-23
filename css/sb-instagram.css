@@ -25,15 +25,6 @@
 /*********************/
 /*** STYLE OPTIONS ***/
 /*********************/
-#sb_instagram.sbi_fixed_height{
-    overflow: hidden;
-    overflow-y: auto;
-}
-#sb_instagram #sbi_images{
-    width: 100%;
-    float: left;
-}
-
 /* Photos */
 #sb_instagram .sbi_photo_wrap{
     position: relative;
@@ -281,12 +272,4 @@
     font-size: 18px;
     margin-top: -9px;
     margin-left: -7px;
-}
-
-/* Media queries */
-@media all and (max-width: 640px) {
-    /* On mobile make the min-width 100% */
-    #sb_instagram.sbi_width_resp{
-        width: 100% !important;
-    }
 }
