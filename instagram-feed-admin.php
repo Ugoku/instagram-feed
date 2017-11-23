@@ -29,22 +29,13 @@ function sb_instagram_settings_page() {
 
     //Declare defaults
     $sb_instagram_settings_defaults = [
-        'sb_instagram_at'                   => '',
-        'sb_instagram_user_id'              => '',
-        'sb_instagram_preserve_settings'    => '',
-        'sb_instagram_ajax_theme'           => false,
-        'sb_instagram_num'                  => '20',
-        'sb_instagram_sort'                 => 'none',
-        'sb_instagram_btn_background'       => '',
-        'sb_instagram_btn_text_color'       => '',
-        //Header
-        'sb_instagram_show_header'          => true,
-        'sb_instagram_header_color'         => '',
-        //Follow button
-        'sb_instagram_show_follow_btn'      => true,
-        'sb_instagram_folow_btn_background' => '',
-        'sb_instagram_follow_btn_text_color' => '',
-        'sb_instagram_follow_btn_text'      => __( 'Follow on Instagram', 'instagram-feed' ),
+        'sb_instagram_at' => '',
+        'sb_instagram_user_id' => '',
+        'sb_instagram_preserve_settings' => '',
+        'sb_instagram_ajax_theme' => false,
+        'sb_instagram_num' => '12',
+        'sb_instagram_sort' => 'none',
+        'sb_instagram_show_header' => true,
     ];
     //Save defaults in an array
     $options = wp_parse_args(get_option('sb_instagram_settings'), $sb_instagram_settings_defaults);
@@ -96,24 +87,11 @@ function sb_instagram_settings_page() {
                 isset($_POST[ 'sb_instagram_show_header' ]) ? $sb_instagram_show_header = sanitize_text_field( $_POST[ 'sb_instagram_show_header' ] ) : $sb_instagram_show_header = '';
                 isset($_POST[ 'sb_instagram_show_bio' ]) ? $sb_instagram_show_bio = sanitize_text_field( $_POST[ 'sb_instagram_show_bio' ] ) : $sb_instagram_show_bio = '';
 
-                $sb_instagram_header_color = sanitize_text_field( $_POST[ 'sb_instagram_header_color' ] );
-                //Follow button
-                isset($_POST[ 'sb_instagram_show_follow_btn' ]) ? $sb_instagram_show_follow_btn = sanitize_text_field( $_POST[ 'sb_instagram_show_follow_btn' ] ) : $sb_instagram_show_follow_btn = '';
-                $sb_instagram_folow_btn_background = sanitize_text_field( $_POST[ 'sb_instagram_folow_btn_background' ] );
-                $sb_instagram_follow_btn_text_color = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text_color' ] );
-                $sb_instagram_follow_btn_text = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text' ] );
-
                 $options[ 'sb_instagram_num' ] = $sb_instagram_num;
                 $options[ 'sb_instagram_sort' ] = $sb_instagram_sort;
                 //Header
                 $options[ 'sb_instagram_show_header' ] = $sb_instagram_show_header;
                 $options[ 'sb_instagram_show_bio' ] = $sb_instagram_show_bio;
-                $options[ 'sb_instagram_header_color' ] = $sb_instagram_header_color;
-                //Follow button
-                $options[ 'sb_instagram_show_follow_btn' ] = $sb_instagram_show_follow_btn;
-                $options[ 'sb_instagram_folow_btn_background' ] = $sb_instagram_folow_btn_background;
-                $options[ 'sb_instagram_follow_btn_text_color' ] = $sb_instagram_follow_btn_text_color;
-                $options[ 'sb_instagram_follow_btn_text' ] = $sb_instagram_follow_btn_text;
             } //End customize tab post
             
             //Save the settings to the settings array
