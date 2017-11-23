@@ -34,19 +34,6 @@
     float: left;
 }
 
-/* Items */
-#sb_instagram #sbi_images .sbi_item{
-    display: inline-block;
-    vertical-align: top;
-
-    padding: inherit !important;
-    margin: 0 !important;
-    text-decoration: none;
-}
-
-/* Cols */
-#sb_instagram #sbi_images .sbi_item{ width: 100%; }
-
 /* Photos */
 #sb_instagram .sbi_photo_wrap{
     position: relative;
