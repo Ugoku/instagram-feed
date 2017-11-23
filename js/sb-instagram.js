@@ -97,9 +97,6 @@ if (!sbi_js_exists) {
                         $header += '</a>';
                         //Add the header
                         $self.find('.sb_instagram_header').prepend($header);
-                        //Change the URL of the follow button
-                        if ($self.find('.sbi_follow_btn').length) $self.find('.sbi_follow_btn a').attr('href', 'https://instagram.com/' + data.data.username)
-
                     }
                 }
             });
@@ -148,9 +145,6 @@ if (!sbi_js_exists) {
                             morePosts.push('1');
 
                         $self.css('padding-bottom', 0);
-
-                        // Call Custom JS if it exists
-                        if (typeof sbi_custom_js == 'function') setTimeout(function(){ sbi_custom_js(); }, 100);
 
                         if( imgRes !== 'thumbnail' ){
                             //This needs to be here otherwise it results in the following error for some sites: $self.find(...).sbi_imgLiquid() is not a function.

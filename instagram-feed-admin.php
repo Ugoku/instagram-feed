@@ -50,9 +50,6 @@ function sb_instagram_settings_page() {
         'sb_instagram_folow_btn_background' => '',
         'sb_instagram_follow_btn_text_color' => '',
         'sb_instagram_follow_btn_text'      => __( 'Follow on Instagram', 'instagram-feed' ),
-        //Misc
-        'sb_instagram_custom_js'            => '',
-        'sb_instagram_disable_awesome'      => false
     ];
     //Save defaults in an array
     $options = wp_parse_args(get_option('sb_instagram_settings'), $sb_instagram_settings_defaults);
@@ -73,9 +70,6 @@ function sb_instagram_settings_page() {
     //Header
     $sb_instagram_show_header = $options[ 'sb_instagram_show_header' ];
     $sb_instagram_show_bio = isset( $options[ 'sb_instagram_show_bio' ] ) ? $options[ 'sb_instagram_show_bio' ] : true;
-    //Misc
-    $sb_instagram_custom_js = $options[ 'sb_instagram_custom_js' ];
-    $sb_instagram_disable_awesome = $options[ 'sb_instagram_disable_awesome' ];
 
 
     //Check nonce before saving data
@@ -135,9 +129,6 @@ function sb_instagram_settings_page() {
                 $sb_instagram_folow_btn_background = sanitize_text_field( $_POST[ 'sb_instagram_folow_btn_background' ] );
                 $sb_instagram_follow_btn_text_color = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text_color' ] );
                 $sb_instagram_follow_btn_text = sanitize_text_field( $_POST[ 'sb_instagram_follow_btn_text' ] );
-                //Misc
-                $sb_instagram_custom_js = $_POST[ 'sb_instagram_custom_js' ];
-                isset($_POST[ 'sb_instagram_disable_awesome' ]) ? $sb_instagram_disable_awesome = sanitize_text_field( $_POST[ 'sb_instagram_disable_awesome' ] ) : $sb_instagram_disable_awesome = '';
 
                 $options[ 'sb_instagram_width' ] = $sb_instagram_width;
                 $options[ 'sb_instagram_width_unit' ] = $sb_instagram_width_unit;
@@ -155,10 +146,6 @@ function sb_instagram_settings_page() {
                 $options[ 'sb_instagram_folow_btn_background' ] = $sb_instagram_folow_btn_background;
                 $options[ 'sb_instagram_follow_btn_text_color' ] = $sb_instagram_follow_btn_text_color;
                 $options[ 'sb_instagram_follow_btn_text' ] = $sb_instagram_follow_btn_text;
-                //Misc
-                $options[ 'sb_instagram_custom_js' ] = $sb_instagram_custom_js;
-                $options[ 'sb_instagram_disable_awesome' ] = $sb_instagram_disable_awesome;
-                
             } //End customize tab post
             
             //Save the settings to the settings array
@@ -197,7 +184,7 @@ function sb_instagram_settings_page() {
                     <h3><?php _e( 'Configure', 'instagram-feed' ); ?></h3>
 
                     <div id="sbi_config">
-                        <a href="https://instagram.com/oauth/authorize/?client_id=3a81a9fa2a064751b8c31385b91cc25c&scope=basic+public_content&redirect_uri=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>&response_type=token" class="sbi_admin_btn"><?php _e( 'Log in and get my Access Token and User ID', 'instagram-feed' ); ?></a>
+                        <a href="https://instagram.com/oauth/authorize/?client_id=3a81a9fa2a064751b8c31385b91cc25c&scope=basic+public_content&redirect_uri=https://smashballoon.com/instagram-feed/instagram-token-plugin/?return_uri=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>&response_type=token" class="sbi_admin_btn"><?php _e( 'Log in and get my Access Token and User ID', 'instagram-feed' ); ?></a>
                         <a href="https://smashballoon.com/instagram-feed/token/" target="_blank" style="position: relative; top: 14px; left: 15px;"><?php _e( 'Button not working?', 'instagram-feed' ); ?></a>
                     </div>
                     
@@ -275,8 +262,6 @@ function sb_instagram_settings_page() {
         <a href="#layout"><?php _e( 'Layout', 'instagram-feed' ); ?></a>
         <a href="#photos"><?php _e( 'Photos', 'instagram-feed' ); ?></a>
         <a href="#headeroptions"><?php _e( 'Header', 'instagram-feed' ); ?></a>
-        <a href="#customcss"><?php _e( 'Custom CSS', 'instagram-feed' ); ?></a>
-        <a href="#customjs"><?php _e( 'Custom JavaScript', 'instagram-feed' ); ?></a>
     </p>
 
     <input type="hidden" name="<?php echo $sb_instagram_customize_hidden_field; ?>" value="Y">
@@ -376,38 +361,7 @@ function sb_instagram_settings_page() {
         </table>
 
         <?php submit_button(); ?>
-
-        <hr id="customcss" />
-        <h3><?php _e('Misc', 'instagram-feed'); ?></h3>
-
-        <table class="form-table">
-            <tbody>
-                <tr valign="top" id="customjs">
-                    <td style="padding-bottom: 0;">
-                    <?php _e('<strong style="font-size: 15px;">Custom JavaScript</strong><br />Enter your own custom JavaScript/jQuery in the box below', 'instagram-feed'); ?>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <td>
-                        <textarea name="sb_instagram_custom_js" id="sb_instagram_custom_js" style="width: 70%;" rows="7"><?php echo esc_textarea( stripslashes($sb_instagram_custom_js), 'instagram-feed' ); ?></textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="form-table">
-            <tbody>
-                <tr valign="top">
-                    <th scope="row"><label><?php _e("Disable Font Awesome", 'instagram-feed'); ?></label></th>
-                    <td>
-                        <input type="checkbox" name="sb_instagram_disable_awesome" id="sb_instagram_disable_awesome" <?php if($sb_instagram_disable_awesome == true) echo 'checked="checked"' ?> /> <?php _e( 'Yes', 'instagram-feed' ); ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <?php submit_button(); ?>
-
-    </form>
+        </form>
 
     <p><i class="fa fa-chevron-circle-right" aria-hidden="true"></i>&nbsp; <?php _e('Next Step: <a href="?page=sb-instagram-feed&tab=display">Display your Feed</a>', 'instagram-feed'); ?></p>
 
@@ -655,13 +609,6 @@ if ( $url !== 'no_at' ) {
 } //End Support tab 
 ?>
 
-
-    <div class="sbi_quickstart">
-        <h3><i class="fa fa-rocket" aria-hidden="true"></i>&nbsp; Display your feed</h3>
-        <p>Copy and paste this shortcode directly into the page, post or widget where you'd like to display the feed:        <input type="text" value="[instagram-feed]" size="15" readonly="readonly" style="text-align: center;" onclick="this.focus();this.select()" title="To copy, click the field then press Ctrl + C (PC) or Cmd + C (Mac)."></p>
-        <p>Find out how to display <a href="?page=sb-instagram-feed&amp;tab=display">multiple feeds</a>.</p>
-    </div>
-
 </div> <!-- end #sbi_admin -->
 
 <?php } //End Settings page
@@ -682,96 +629,15 @@ function sb_instagram_admin_scripts() {
 	    ]
     );
     if( !wp_script_is('jquery-ui-draggable') ) { 
-        wp_enqueue_script(
-            [
+        wp_enqueue_script([
             'jquery',
             'jquery-ui-core',
             'jquery-ui-draggable'
-            ]
-        );
+        ]);
     }
-    wp_enqueue_script(
-        [
-        'hoverIntent',
-        'wp-color-picker'
-        ]
-    );
+    wp_enqueue_script(['hoverIntent']);
 }
 add_action( 'admin_enqueue_scripts', 'sb_instagram_admin_scripts' );
-
-// Add a Settings link to the plugin on the Plugins page
-$sbi_plugin_file = 'instagram-feed/instagram-feed.php';
-add_filter( "plugin_action_links_{$sbi_plugin_file}", 'sbi_add_settings_link', 10, 2 );
- 
-//modify the link by unshifting the array
-function sbi_add_settings_link( $links, $file ) {
-    $sbi_settings_link = '<a href="' . admin_url( 'admin.php?page=sb-instagram-feed' ) . '">' . __( 'Settings', 'instagram-feed' ) . '</a>';
-    array_unshift( $links, $sbi_settings_link );
- 
-    return $links;
-}
-
-
-//REVIEW REQUEST NOTICE
-
-// checks $_GET to see if the nag variable is set and what it's value is
-function sbi_check_nag_get( $get, $nag, $option, $transient ) {
-    if ( isset( $_GET[$nag] ) && $get[$nag] == 1 ) {
-        update_option( $option, 'dismissed' );
-    } elseif ( isset( $_GET[$nag] ) && $get[$nag] == 'later' ) {
-        $time = 2 * WEEK_IN_SECONDS;
-        set_transient( $transient, 'waiting', $time );
-        update_option( $option, 'pending' );
-    }
-}
-
-// will set a transient if the notice hasn't been dismissed or hasn't been set yet
-function sbi_maybe_set_transient( $transient, $option ) {
-    $sbi_rating_notice_waiting = get_transient( $transient );
-    $notice_status = get_option( $option, false );
-
-    if ( ! $sbi_rating_notice_waiting && !( $notice_status === 'dismissed' || $notice_status === 'pending' ) ) {
-        $time = 2 * WEEK_IN_SECONDS;
-        set_transient( $transient, 'waiting', $time );
-        update_option( $option, 'pending' );
-    }
-}
-
-// generates the html for the admin notice
-function sbi_rating_notice_html() {
-
-    //Only show to admins
-    if ( current_user_can( 'manage_options' ) ){
-
-        global $current_user;
-        $user_id = $current_user->ID;
-
-        /* Check that the user hasn't already clicked to ignore the message */
-        if ( ! get_user_meta( $user_id, 'sbi_ignore_rating_notice') ) {
-
-            _e("
-            <div class='sbi_notice sbi_review_notice'>
-                <img src='". plugins_url( 'instagram-feed/img/sbi-icon.png' ) ."' alt='Instagram Feed'>
-                <div class='ctf-notice-text'>
-                    <p>It's great to see that you've been using the <strong>Instagram Feed</strong> plugin for a while now. Hopefully you're happy with it!&nbsp; If so, would you consider leaving a positive review? It really helps to support the plugin and helps others to discover it too!</p>
-                    <p class='links'>
-                        <a class='sbi_notice_dismiss' href='https://wordpress.org/support/plugin/instagram-feed/reviews/' target='_blank'>Sure, I'd love to!</a>
-                        &middot;
-                        <a class='sbi_notice_dismiss' href='" .esc_url( add_query_arg( 'sbi_ignore_rating_notice_nag', '1' ) ). "'>No thanks</a>
-                        &middot;
-                        <a class='sbi_notice_dismiss' href='" .esc_url( add_query_arg( 'sbi_ignore_rating_notice_nag', '1' ) ). "'>I've already given a review</a>
-                        &middot;
-                        <a class='sbi_notice_dismiss' href='" .esc_url( add_query_arg( 'sbi_ignore_rating_notice_nag', 'later' ) ). "'>Ask Me Later</a>
-                    </p>
-                </div>
-                <a class='sbi_notice_close' href='" .esc_url( add_query_arg( 'sbi_ignore_rating_notice_nag', '1' ) ). "'><i class='fa fa-close'></i></a>
-            </div>
-            ");
-
-        }
-
-    }
-}
 
 /**
  * Called via ajax to automatically save access token and access token secret
@@ -790,17 +656,3 @@ function sbi_auto_save_tokens() {
     die();
 }
 add_action( 'wp_ajax_sbi_auto_save_tokens', 'sbi_auto_save_tokens' );
-
-// variables to define certain terms
-$transient = 'instagram_feed_rating_notice_waiting';
-$option = 'sbi_rating_notice';
-$nag = 'sbi_ignore_rating_notice_nag';
-
-sbi_check_nag_get( $_GET, $nag, $option, $transient );
-sbi_maybe_set_transient( $transient, $option );
-$notice_status = get_option( $option, false );
-
-// only display the notice if the time offset has passed and the user hasn't already dismissed it
-if ( get_transient( $transient ) !== 'waiting' && $notice_status !== 'dismissed' ) {
-    add_action( 'admin_notices', 'sbi_rating_notice_html' );
-}

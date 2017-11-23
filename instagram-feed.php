@@ -169,10 +169,6 @@ function sb_instagram_styles_enqueue() {
     wp_enqueue_style( 'sb_instagram_styles' );
 
     $options = get_option('sb_instagram_settings');
-    if(isset($options['sb_instagram_disable_awesome'])){
-        if( !$options['sb_instagram_disable_awesome'] || !isset($options['sb_instagram_disable_awesome']) ) wp_enqueue_style( 'sb-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', [], '4.7.0' );
-    }
-    
 }
 
 //Enqueue scripts
@@ -219,24 +215,6 @@ function sb_instagram_custom_css() {
     echo "\r\n";
 }
 
-
-//Custom JS
-add_action( 'wp_footer', 'sb_instagram_custom_js' );
-function sb_instagram_custom_js() {
-    $options = get_option('sb_instagram_settings');
-    isset($options[ 'sb_instagram_custom_js' ]) ? $sb_instagram_custom_js = trim($options['sb_instagram_custom_js']) : $sb_instagram_custom_js = '';
-
-	if (!empty($sb_instagram_custom_js)) {
-		echo '<!-- Instagram Feed JS -->' .  "\r\n";
-		echo '<script>' .  "\r\n";
-		echo 'jQuery( document ).ready(function($) {' . "\r\n";
-		echo 'window.sbi_custom_js = function(){' .  "\r\n";
-		echo stripslashes($sb_instagram_custom_js) .  "\r\n";
-		echo '}' .  "\r\n";
-		echo '});' .  "\r\n";
-		echo '</script>' .  "\r\n";
-	}
-}
 
 if ( ! function_exists( 'sb_remove_style_version' ) ) {
 	function sb_remove_style_version( $src, $handle ){
