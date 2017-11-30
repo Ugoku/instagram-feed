@@ -41,7 +41,7 @@ function sb_instagram_settings_page()
     ];
     //Save defaults in an array
     $options = wp_parse_args(get_option('sb_instagram_settings'), $sb_instagram_settings_defaults);
-    update_option('sb_instagram_settings', $options);
+    update_option('sb_instagram_settings', $options, true);
 
     //Set the page variables
     $sb_instagram_at = $options['sb_instagram_at'];
@@ -54,26 +54,27 @@ function sb_instagram_settings_page()
     $sb_instagram_show_bio = isset($options['sb_instagram_show_bio'] ) ? $options['sb_instagram_show_bio'] : true;
 
 
-    //Check nonce before saving data
-    if (! isset($_POST['sb_instagram_settings_nonce'] ) || ! wp_verify_nonce($_POST['sb_instagram_settings_nonce'], 'sb_instagram_saving_settings')) {
-        //Nonce did not verify
+    // Check nonce before saving data
+    if (!isset($_POST['sb_instagram_settings_nonce'] ) || ! wp_verify_nonce($_POST['sb_instagram_settings_nonce'], 'sb_instagram_saving_settings')) {
+        // Nonce did not verify
+        //echo '<p style="color: red">' . __('Nonce not set or invalid', 'instagram-feed') . '</p>';
     } else {
         // See if the user has posted us some information. If they did, this hidden field will be set to 'Y'.
-        if (isset($_POST[ $sb_instagram_settings_hidden_field ]) && $_POST[ $sb_instagram_settings_hidden_field ] == 'Y') {
+        if (isset($_POST[$sb_instagram_settings_hidden_field]) && $_POST[$sb_instagram_settings_hidden_field] == 'Y') {
 
-            if (isset($_POST[ $sb_instagram_configure_hidden_field ]) && $_POST[ $sb_instagram_configure_hidden_field ] == 'Y') {
+            if (isset($_POST[$sb_instagram_configure_hidden_field]) && $_POST[$sb_instagram_configure_hidden_field] == 'Y') {
 
                 $sb_instagram_at = sanitize_text_field($_POST['sb_instagram_at'] );
                 $sb_instagram_user_id = sanitize_text_field($_POST['sb_instagram_user_id'] );
 
-                isset($_POST['sb_instagram_preserve_settings']) ? $sb_instagram_preserve_settings = sanitize_text_field($_POST['sb_instagram_preserve_settings'] ) : $sb_instagram_preserve_settings = '';
+                $sb_instagram_preserve_settings = isset($_POST['sb_instagram_preserve_settings']) ? sanitize_text_field($_POST['sb_instagram_preserve_settings'] ) : '';
 
                 $options['sb_instagram_at'] = $sb_instagram_at;
                 $options['sb_instagram_user_id'] = $sb_instagram_user_id;
                 $options['sb_instagram_preserve_settings'] = $sb_instagram_preserve_settings;
             } //End config tab post
 
-            if (isset($_POST[ $sb_instagram_customize_hidden_field ]) && $_POST[ $sb_instagram_customize_hidden_field ] == 'Y') {
+            if (isset($_POST[$sb_instagram_customize_hidden_field]) && $_POST[$sb_instagram_customize_hidden_field] == 'Y') {
                 
                 //Validate and sanitize number of photos field
                 $safe_num = intval( sanitize_text_field($_POST['sb_instagram_num'] ) );
@@ -83,8 +84,8 @@ function sb_instagram_settings_page()
 
                 $sb_instagram_sort = sanitize_text_field($_POST['sb_instagram_sort'] );
                 //Header
-                isset($_POST['sb_instagram_show_header']) ? $sb_instagram_show_header = sanitize_text_field($_POST['sb_instagram_show_header'] ) : $sb_instagram_show_header = '';
-                isset($_POST['sb_instagram_show_bio']) ? $sb_instagram_show_bio = sanitize_text_field($_POST['sb_instagram_show_bio'] ) : $sb_instagram_show_bio = '';
+                $sb_instagram_show_header = isset($_POST['sb_instagram_show_header']) ? sanitize_text_field($_POST['sb_instagram_show_header']) : '';
+                $sb_instagram_show_bio = isset($_POST['sb_instagram_show_bio']) ? sanitize_text_field($_POST['sb_instagram_show_bio']) : '';
 
                 $options['sb_instagram_num'] = $sb_instagram_num;
                 $options['sb_instagram_sort'] = $sb_instagram_sort;
@@ -94,13 +95,16 @@ function sb_instagram_settings_page()
             } //End customize tab post
             
             //Save the settings to the settings array
-            update_option('sb_instagram_settings', $options );
+            wp_cache_delete('alloptions', 'options' );
+            $status = update_option('sb_instagram_settings', $options, true);
 
-        ?>
-        <div class="updated"><p><strong><?php _e('Settings saved.', 'instagram-feed'); ?></strong></p></div>
-        <?php } ?>
-
-    <?php } //End nonce check ?>
+            if ($status) {
+                echo '<div class="updated"><p><strong>' . __('Settings saved.', 'instagram-feed') . '</strong></p></div>';
+            } else {
+                echo '<p style="color: red">' . __('Saving settings failed.', 'instagram-feed') . '</p>';
+            }
+        }
+    } //End nonce check ?>
 
 
     <div id="sbi_admin" class="wrap">
@@ -113,12 +117,12 @@ function sb_instagram_settings_page()
             <input type="hidden" name="<?php echo $sb_instagram_settings_hidden_field; ?>" value="Y">
             <?php wp_nonce_field('sb_instagram_saving_settings', 'sb_instagram_settings_nonce'); ?>
 
-            <?php $sbi_active_tab = isset($_GET['tab'] ) ? $_GET['tab'] : 'configure'; ?>
+            <?php $sbi_active_tab = $_GET['tab'] ?? 'configure'; ?>
             <h2 class="nav-tab-wrapper">
-                <a href="?page=sb-instagram-feed&amp;tab=configure" class="nav-tab <?php echo $sbi_active_tab == 'configure' ? 'nav-tab-active' : ''; ?>"><?php _e('1. Configure', 'instagram-feed'); ?></a>
-                <a href="?page=sb-instagram-feed&amp;tab=customize" class="nav-tab <?php echo $sbi_active_tab == 'customize' ? 'nav-tab-active' : ''; ?>"><?php _e('2. Customize', 'instagram-feed'); ?></a>
-                <a href="?page=sb-instagram-feed&amp;tab=display"   class="nav-tab <?php echo $sbi_active_tab == 'display'   ? 'nav-tab-active' : ''; ?>"><?php _e('3. Display Your Feed', 'instagram-feed'); ?></a>
-                <a href="?page=sb-instagram-feed&amp;tab=support"   class="nav-tab <?php echo $sbi_active_tab == 'support'   ? 'nav-tab-active' : ''; ?>"><?php _e('Support', 'instagram-feed'); ?></a>
+                <a href="?page=sb-instagram-feed&amp;tab=configure" class="nav-tab <?= $sbi_active_tab == 'configure' ? 'nav-tab-active' : ''; ?>"><?php _e('1. Configure', 'instagram-feed'); ?></a>
+                <a href="?page=sb-instagram-feed&amp;tab=customize" class="nav-tab <?= $sbi_active_tab == 'customize' ? 'nav-tab-active' : ''; ?>"><?php _e('2. Customize', 'instagram-feed'); ?></a>
+                <a href="?page=sb-instagram-feed&amp;tab=display"   class="nav-tab <?= $sbi_active_tab == 'display'   ? 'nav-tab-active' : ''; ?>"><?php _e('3. Display Your Feed', 'instagram-feed'); ?></a>
+                <a href="?page=sb-instagram-feed&amp;tab=support"   class="nav-tab <?= $sbi_active_tab == 'support'   ? 'nav-tab-active' : ''; ?>"><?php _e('Support', 'instagram-feed'); ?></a>
             </h2>
 
             <?php if ($sbi_active_tab == 'configure') { //Start Configure tab ?>
@@ -136,8 +140,8 @@ function sb_instagram_settings_page()
                     <tr valign="top">
                         <th scope="row"><label><?php _e('Access Token', 'instagram-feed'); ?></label></th>
                         <td>
-                            <input name="sb_instagram_at" id="sb_instagram_at" type="text" value="<?php echo esc_attr($sb_instagram_at ); ?>" size="60" maxlength="60" placeholder="Click button above to get your Access Token" />
-                            &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e('What is this?', 'instagram-feed'); ?></a>
+                            <input name="sb_instagram_at" id="sb_instagram_at" type="text" value="<?php echo esc_attr($sb_instagram_at ); ?>" size="60" maxlength="60" placeholder="Click button above to get your Access Token">
+                           &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e('What is this?', 'instagram-feed'); ?></a>
                             <p class="sbi_tooltip"><?php _e("In order to display your photos you need an Access Token from Instagram. To get yours, simply click the button above and log into Instagram. You can also use the button on <a href='https://smashballoon.com/instagram-feed/token/' target='_blank'>this page</a>.", 'instagram-feed'); ?></p>
                         </td>
                     </tr>
@@ -149,9 +153,9 @@ function sb_instagram_settings_page()
                         <td>
                             <span>
                                 <?php $sb_instagram_type = 'user'; ?>
-                                <input type="radio" name="sb_instagram_type" id="sb_instagram_type_user" value="user" <?php if ($sb_instagram_type == "user") echo "checked"; ?> />
+                                <input type="hidden" name="sb_instagram_type" id="sb_instagram_type_user" value="user">
                                 <label class="sbi_radio_label" for="sb_instagram_type_user"><?php _e('User ID(s):', 'instagram-feed'); ?></label>
-                                <input name="sb_instagram_user_id" id="sb_instagram_user_id" type="text" value="<?php echo esc_attr($sb_instagram_user_id ); ?>" size="25" />
+                                <input name="sb_instagram_user_id" id="sb_instagram_user_id" type="text" value="<?php echo esc_attr($sb_instagram_user_id ); ?>" size="25">
                                 &nbsp;<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e('What is this?', 'instagram-feed'); ?></a>
                                 <p class="sbi_tooltip"><?php _e("These are the IDs of the Instagram accounts you want to display photos from. To get your ID simply click on the button above and log into Instagram.<br /><br />You can also display photos from other peoples Instagram accounts. To find their User ID you can use <a href='https://smashballoon.com/instagram-feed/find-instagram-user-id/' target='_blank'>this tool</a>. You can separate multiple IDs using commas.", 'instagram-feed'); ?></p><br />
                             </span>
@@ -512,10 +516,10 @@ function sbi_auto_save_tokens() {
     if (current_user_can('edit_posts')) {
         wp_cache_delete ('alloptions', 'options');
 
-        $options = get_option('sb_instagram_settings', [] );
+        $options = get_option('sb_instagram_settings', []);
         $options['sb_instagram_at'] = isset($_POST['access_token'] ) ? sanitize_text_field($_POST['access_token'] ) : '';
 
-        update_option('sb_instagram_settings', $options );
+        update_option('sb_instagram_settings', $options, true);
         echo $_POST['access_token'];
     }
     die();

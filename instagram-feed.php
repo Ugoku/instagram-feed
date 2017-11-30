@@ -38,18 +38,17 @@ function display_instagram($atts, $content = null)
     /******************* SHORTCODE OPTIONS ********************/
 
     $options = get_option('sb_instagram_settings');
-    
+
     //Pass in shortcode attrbutes
     $atts = shortcode_atts([
         'id' => $options['sb_instagram_user_id'] ?? '',
         'sortby' => $options['sb_instagram_sort'] ?? '',
-        'num' => $options['sb_instagram_num'] ?? '',
+        'num' => $options['sb_instagram_num'] ?? 10,
         'showbutton' => false,
         'showheader' => $options['sb_instagram_show_header'] ?? '',
         'showbio' => $options['sb_instagram_show_bio'] ?? '',
         'class' => '',
     ], $atts);
-
 
     /******************* VARS ********************/
 
@@ -57,8 +56,7 @@ function display_instagram($atts, $content = null)
     $sb_instagram_user_id = trim($atts['id']);
 
     if (empty($sb_instagram_user_id)) {
-        $sb_instagram_settings = get_option('sb_instagram_settings');
-        $at_arr = isset($sb_instagram_settings['sb_instagram_at']) ? explode('.', trim($sb_instagram_settings['sb_instagram_at']), 2) : [];
+        $at_arr = isset($options['sb_instagram_at']) ? explode('.', trim($options['sb_instagram_at']), 2) : [];
         $sb_instagram_user_id = $at_arr[0];
     }
 
@@ -87,7 +85,7 @@ function display_instagram($atts, $content = null)
         '" data-id="' . $sb_instagram_user_id .
         '" data-num="' . trim($atts['num']) .
         '" data-res="auto' .
-        '" data-options=\'{ &quot;sortby&quot;: &quot;'.$atts['sortby'].'&quot;, &quot;showbio&quot;: &quot;'.$sb_instagram_show_bio.'&quot; }\'>';
+        '" data-options=\'{ &quot;sortby&quot;: &quot;' . $atts['sortby'] . '&quot;, &quot;showbio&quot;: &quot;' . $sb_instagram_show_bio . '&quot; }\'>';
 
     //Header
     if ($sb_instagram_show_header) {
@@ -134,8 +132,6 @@ function sb_instagram_styles_enqueue()
 {
     wp_register_style('sb_instagram_styles', plugins_url('css/sb-instagram.css', __FILE__), [], SBIVER);
     wp_enqueue_style('sb_instagram_styles');
-
-    $options = get_option('sb_instagram_settings');
 }
 
 //Enqueue scripts
@@ -150,7 +146,7 @@ function sb_instagram_scripts_enqueue()
     $sb_instagram_settings = get_option('sb_instagram_settings');
 
     //Access token
-    isset($sb_instagram_settings['sb_instagram_at']) ? $sb_instagram_at = trim($sb_instagram_settings['sb_instagram_at']) : $sb_instagram_at = '';
+    $sb_instagram_at = isset($sb_instagram_settings['sb_instagram_at']) ? trim($sb_instagram_settings['sb_instagram_at']) : '';
 
     $data = [
         'sb_instagram_at' => $sb_instagram_at
@@ -201,17 +197,9 @@ if (!function_exists('sb_remove_style_version')) {
 add_action('init', 'sb_instagram_load_textdomain');
 function sb_instagram_load_textdomain()
 {
-    load_plugin_textdomain('instagram-feed', false, basename(dirname(__FILE__)) . '/languages');
+    load_plugin_textdomain('instagram-feed', false, basename(__DIR__) . '/languages');
 }
 
-//Run function on plugin activate
-function sb_instagram_activate()
-{
-    $options = get_option('sb_instagram_settings');
-    $options['sb_instagram_show_header'] = true;
-    update_option('sb_instagram_settings', $options);
-}
-register_activation_hook(__FILE__, 'sb_instagram_activate');
 
 //Uninstall
 function sb_instagram_uninstall()
@@ -220,10 +208,9 @@ function sb_instagram_uninstall()
         return;
     }
 
-    //If the user is preserving the settings then don't delete them
+    // If the user is preserving the settings then don't delete them
     $options = get_option('sb_instagram_settings');
-    $sb_instagram_preserve_settings = $options['sb_instagram_preserve_settings'];
-    if ($sb_instagram_preserve_settings) {
+    if ($options['sb_instagram_preserve_settings']) {
         return;
     }
 
