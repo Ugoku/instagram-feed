@@ -33,16 +33,27 @@
     position: relative;
 }
 .sbi_photo_wrap figcaption {
-    background: rgba(255, 255, 255, 0.75);
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
     height: 100%;
     left: 0;
+    opacity: 0;
+    padding: 2em;
     position: absolute;
-    top: 100%;
-    transition: top 0.2s linear;
+    top: 0;
+    transition: opacity 0.2s linear;
     width: 100%;
 }
 .sbi_photo_wrap:hover figcaption, .sbi_photo_wrap:active figcaption {
-    top: 0;
+    opacity: 1;
+}
+.sbi_username {
+    display: block;
+    font-weight: 700;
 }
 #sb_instagram .sbi_photo{
     display: block;

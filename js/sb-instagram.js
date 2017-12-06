@@ -101,13 +101,13 @@ function initInstagram()
         });
 
         //Loop through User IDs
-        jQuery.each(ids_arr, function(index, entry) {
-            window.sbiFeedMeta[$i].idsInFeed.push(entry);
+        jQuery.each(ids_arr, function(index, userID) {
+            window.sbiFeedMeta[$i].idsInFeed.push(userID);
 
             var templateString = '<div class="sbi_item sbi_type_{{model.type}} sbi_new" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
             templateString += '<figure class="sbi_photo_wrap">';
             templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200"></a>';
-            templateString += '<figcaption>{{caption}}</figcaption>';
+            templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption>';
             templateString += '</figure></div>';
 
             var userFeed = new instagramfeed({
@@ -135,7 +135,7 @@ function initInstagram()
 
                     return true;
                 },
-                userId: parseInt(entry, 10),
+                userId: parseInt(userID, 10),
                 accessToken: sb_instagram_js_options.sb_instagram_at,
                 after: function() {
                     $self.find('.sbi_loader').remove();
