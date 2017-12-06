@@ -26,8 +26,23 @@
 /*** STYLE OPTIONS ***/
 /*********************/
 /* Photos */
-#sb_instagram .sbi_photo_wrap{
+.sbi_photo_wrap {
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
     position: relative;
+}
+.sbi_photo_wrap figcaption {
+    background: rgba(255, 255, 255, 0.75);
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    transition: top 0.2s linear;
+    width: 100%;
+}
+.sbi_photo_wrap:hover figcaption, .sbi_photo_wrap:active figcaption {
+    top: 0;
 }
 #sb_instagram .sbi_photo{
     display: block;
@@ -49,41 +64,6 @@
     margin: 0 !important;
     max-width: 100% !important;
     opacity: 1 !important;
-}
-#sb_instagram .sbi_link{
-    display: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
-    width: 100%;
-    padding: 10px 0;
-    background: rgba(0,0,0,0.5);
-    text-align: center;
-    color: #fff;
-    font-size: 12px;
-    line-height: 1.1;
-}
-#sb_instagram .sbi_link a{
-    padding: 0 6px;
-    text-decoration: none;
-    color: #fff;
-    font-size: 12px;
-    line-height: 1.1;
-
-    display: inline-block;
-    vertical-align: top;
-}
-#sb_instagram .sbi_link .sbi_lightbox_link{
-    padding-bottom: 5px;
-}
-#sb_instagram .sbi_link a:hover,
-#sb_instagram .sbi_link a:focus{
-    text-decoration: underline;
-}
-#sb_instagram .sbi_photo_wrap:hover .sbi_link,
-#sb_instagram .sbi_photo_wrap:focus .sbi_link{
-    display: block;
 }
 
 /* Videos */

@@ -21,22 +21,52 @@ function generateHeader(data, feedOptions)
     return html;
 }
 
+function getImageResolution(feedWidth)
+{
+    var colWidth = feedWidth;
+
+    var sbiWindowWidth = jQuery(window).width();
+    if (sbiWindowWidth < 640) {
+        // Need this for mobile so that image res is right on mobile, as the number of cols isn't always accurate on mobile as they are changed using CSS
+        if ((feedWidth > 320 && feedWidth < 480) && sbiWindowWidth < 480) {
+            colWidth = 480; //Use full size images
+        }
+        if (feedWidth < 320 && sbiWindowWidth < 480) {
+            colWidth = 300; //Use medium size images
+        }
+    }
+
+    var imgRes = 'standard_resolution';
+    if (colWidth < 150) {
+        imgRes = 'thumbnail';
+    } else if (colWidth < 320) {
+        imgRes = 'low_resolution';
+    }
+
+    //If the feed is hidden (eg; in a tab) then the width is returned as 100, and so auto set the res to be medium to cover most bases
+    if (feedWidth <= 100) {
+        imgRes = 'low_resolution';
+    }
+
+    return imgRes;
+}
+
 function initInstagram()
 {
     // Used to track multiple feeds on the page
     window.sbiFeedMeta = {};
 
     jQuery('#sb_instagram.sbi').each(function($i) {
-        var $self = jQuery(this),
-            $target = $self.find('#sbi_images'),
-            imgRes = 'standard_resolution',
-            //Convert styles JSON string to an object
-            feedOptions = JSON.parse(this.getAttribute('data-options')),
-            getType = 'user',
-            sortby = 'none',
-            user_id = this.getAttribute('data-id'),
-            num = this.getAttribute('data-num'),
-            morePosts = []; //Used to determine whether to show the Load More button when displaying posts from more than one id/hashtag. If one of the ids/hashtags has more posts then still show button.
+        var $self = jQuery(this);
+        var $target = $self.find('#sbi_images');
+        var imgRes = 'standard_resolution';
+        // Convert styles JSON string to an object
+        var feedOptions = JSON.parse(this.getAttribute('data-options'));
+        var getType = 'user';
+        var sortby = 'none';
+        var user_id = this.getAttribute('data-id');
+        var num = this.getAttribute('data-num');
+        var morePosts = []; //Used to determine whether to show the Load More button when displaying posts from more than one id/hashtag. If one of the ids/hashtags has more posts then still show button.
 
         jQuery(this).attr('data-sbi-index', $i);
         // setting up some global objects to keep track of various statuses used for the caching system
@@ -50,52 +80,12 @@ function initInstagram()
             sortby = feedOptions.sortby;
         }
 
-        switch (this.getAttribute('data-res')) {
-            case 'auto':
-                var feedWidth = $self.innerWidth();
-                var colWidth = $self.innerWidth();
+        imgRes = getImageResolution($self.innerWidth());
 
-                //Check if page width is less than 640. If it is then use the script above
-                var sbiWindowWidth = jQuery(window).width();
-                if (sbiWindowWidth < 640) {
-                    // Need this for mobile so that image res is right on mobile, as the number of cols isn't always accurate on mobile as they are changed using CSS
-                    if ((feedWidth > 320 && feedWidth < 480) && sbiWindowWidth < 480) {
-                        colWidth = 480; //Use full size images
-                    }
-                    if (feedWidth < 320 && sbiWindowWidth < 480) {
-                        colWidth = 300; //Use medium size images
-                    }
-                }
-
-                if (colWidth < 150) {
-                    imgRes = 'thumbnail';
-                } else if (colWidth < 320) {
-                    imgRes = 'low_resolution';
-                } else {
-                    imgRes = 'standard_resolution';
-                }
-
-                //If the feed is hidden (eg; in a tab) then the width is returned as 100, and so auto set the res to be medium to cover most bases
-                if (feedWidth <= 100) {
-                    imgRes = 'low_resolution';
-                }
-
-                break;
-            case 'thumb':
-                imgRes = 'thumbnail';
-                break;
-            case 'medium':
-                imgRes = 'low_resolution';
-                break;
-            default:
-                imgRes = 'standard_resolution';
-        }
-
-        //Split comma separated hashtags into array
+        // Split comma separated hashtags into array
         var ids_arr = user_id.replace(/ /g, '').split(',');
-        var looparray = ids_arr;
 
-        //Get page info for first User ID
+        // Get page info for first User ID
         var sbi_page_url = 'https://api.instagram.com/v1/users/' + ids_arr[0] + '?access_token=' + sb_instagram_js_options.sb_instagram_at;
 
         jQuery.ajax({
@@ -111,13 +101,14 @@ function initInstagram()
         });
 
         //Loop through User IDs
-        jQuery.each(looparray, function(index, entry) {
+        jQuery.each(ids_arr, function(index, entry) {
             window.sbiFeedMeta[$i].idsInFeed.push(entry);
 
             var templateString = '<div class="sbi_item sbi_type_{{model.type}} sbi_new" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
-            templateString += '<div class="sbi_photo_wrap">';
+            templateString += '<figure class="sbi_photo_wrap">';
             templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200"></a>';
-            templateString += '</div></div>';
+            templateString += '<figcaption>{{caption}}</figcaption>';
+            templateString += '</figure></div>';
 
             var userFeed = new instagramfeed({
                 target: $target,
