@@ -122,10 +122,10 @@ function initInstagram()
                     var date = new Date(image.created_time * 1000);
                     image.created_time_raw = date.getTime();
 
-                    //Remove all special chars in caption so doesn't cause issue in alt tag
-                    //Always check to make sure it exists
+                    // Remove " in caption so doesn't cause issue in alt tag
+                    // Always check to make sure it exists
                     if (image.caption != null) {
-                        image.caption.text = image.caption.text.replace(/[^a-zA-Z ]/g, ''); //TODO: (/"/g, '\\"') ?
+                        image.caption.text = image.caption.text.replace(/"/g, '\\"');
                     }
 
                     //Remove caching key from image sources to prevent duplicate content issue
