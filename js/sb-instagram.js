@@ -106,8 +106,8 @@ function initInstagram()
 
             var templateString = '<div class="sbi_item sbi_type_{{model.type}} sbi_new" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
             templateString += '<figure class="sbi_photo_wrap">';
-            templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200"></a>';
-            templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption>';
+            templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200">';
+            templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption></a>';
             templateString += '</figure></div>';
 
             var userFeed = new instagramfeed({

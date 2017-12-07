@@ -269,11 +269,11 @@ function sb_instagram_settings_page()
 
         <h3 style="padding-top: 10px;"><?php _e('Multiple Feeds', 'instagram-feed'); ?></h3>
         <p><?php _e("If you'd like to display multiple feeds then you can set different settings directly in the shortcode like so:", 'instagram-feed'); ?>
-        <code>[instagram-feed num=9 cols=3]</code></p>
+        <code>[instagram-feed num=9]</code></p>
         <p><?php _e('You can display as many different feeds as you like, on either the same page or on different pages, by just using the shortcode options below. For example:', 'instagram-feed'); ?><br />
         <code>[instagram-feed]</code><br />
         <code>[instagram-feed id="ANOTHER_USER_ID"]</code><br />
-        <code>[instagram-feed id="ANOTHER_USER_ID, YET_ANOTHER_USER_ID" num=4 cols=4]</code>
+        <code>[instagram-feed id="ANOTHER_USER_ID, YET_ANOTHER_USER_ID" num=4]</code>
         </p>
         <p><?php _e("See the table below for a full list of available shortcode options:", 'instagram-feed'); ?></p>
 
