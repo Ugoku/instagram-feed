@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('SBIVER', '1.6.0');
+define('SBIVER', '1.7.0');
 
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
@@ -46,7 +46,6 @@ function display_instagram($atts, $content = null)
         'num' => $options['sb_instagram_num'] ?? 10,
         'showheader' => $options['sb_instagram_show_header'] ?? '',
         'showbio' => $options['sb_instagram_show_bio'] ?? '',
-        'class' => '',
     ], $atts);
 
     /******************* VARS ********************/
@@ -71,20 +70,14 @@ function display_instagram($atts, $content = null)
         $sb_instagram_show_bio = 'true';
     }
 
-    //Class
-    $sbi_class = '';
-    if (!empty($atts['class'])) {
-        $sbi_class .= ' ' . trim($atts['class']) ;
-    }
-
     /******************* CONTENT ********************/
 
-    $sb_instagram_content = '<div id="sb_instagram" class="sbi' . $sbi_class;
+    $sb_instagram_content = '<div id="sb_instagram"';
     $sb_instagram_content .=
-        '" data-id="' . $sb_instagram_user_id .
-        '" data-num="' . trim($atts['num']) .
-        '" data-res="auto' .
-        '" data-options=\'{ &quot;sortby&quot;: &quot;' . $atts['sortby'] . '&quot;, &quot;showbio&quot;: &quot;' . $sb_instagram_show_bio . '&quot; }\'>';
+        ' data-id="' . $sb_instagram_user_id . '"' .
+        ' data-num="' . trim($atts['num']) . '"' .
+        ' data-res="auto"' .
+        ' data-options=\'{ &quot;sortby&quot;: &quot;' . $atts['sortby'] . '&quot;, &quot;showbio&quot;: &quot;' . $sb_instagram_show_bio . '&quot; }\'>';
 
     //Header
     if ($sb_instagram_show_header) {
