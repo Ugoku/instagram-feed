@@ -89,23 +89,19 @@ function initInstagram()
 
     var thisEl = document.getElementById('sb_instagram');
     var $self = jQuery('#sb_instagram');
-    var $target = $self.find('#sbi_images');
     var imgRes = 'standard_resolution';
     // Convert styles JSON string to an object
     var feedOptions = JSON.parse(thisEl.getAttribute('data-options'));
-    var getType = 'user';
     var sortby = 'date';
-    var user_id = thisEl.getAttribute('data-id');
-    var num = thisEl.getAttribute('data-num');
 
     if (feedOptions.sortby !== '') {
         sortby = feedOptions.sortby;
     }
 
-    imgRes = getImageResolution($self.innerWidth());
+    imgRes = getImageResolution(thisEl.getBoundingClientRect().width);
 
     // Split comma separated hashtags into array
-    var userIDs = user_id.replace(/ /g, '').split(',');
+    var userIDs = thisEl.getAttribute('data-id').replace(/ /g, '').split(',');
 
     // Get page info for first User ID
     var sbi_page_url = 'https://api.instagram.com/v1/users/' + userIDs[0] + '?access_token=' + instagramAccessToken;
@@ -127,17 +123,18 @@ function initInstagram()
     // Loop through User IDs
     userIDs.forEach(function(userID) {
         var userFeed = new instagramfeed({
-            target: $target,
-            get: getType,
+            target: thisEl.querySelector('#sbi_images'),
+            get: 'user',
             sortBy: sortby,
             resolution: imgRes,
-            limit: parseInt(num, 10),
+            limit: parseInt(thisEl.getAttribute('data-num'), 10),
             template: getTemplateString(),
             filter: filterImage,
             userId: parseInt(userID, 10),
             accessToken: instagramAccessToken,
             after: function() {
-                $self.find('.sbi_loader').remove();
+                var loaderEl = thisEl.querySelector('.sbi_loader');
+                loaderEl.parentNode.removeChild(loaderEl);
 
                 // Add video icon to videos
                 var photos = document.querySelectorAll('#sb_instagram .sbi_photo');
