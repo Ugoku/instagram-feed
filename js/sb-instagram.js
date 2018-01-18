@@ -103,6 +103,27 @@ function getTemplateString()
     return templateString;
 }
 
+function sortImages(sortBy) {
+    var itemNodes = document.getElementById('sb_instagram').querySelectorAll('.sbi_item');
+    var itemArray = Array.prototype.slice.call(itemNodes);
+
+    itemArray.sort(function (a, b) {
+        if (sortBy === 'date' || sortBy === 'none') { // 'none' for backwards compatibility
+            var aComp = parseInt(a.dataset.date, 10);
+            var bComp = parseInt(b.dataset.date, 10);
+            return bComp - aComp;
+        } else {
+            // Randomize
+            return (Math.round(Math.random()) - 0.5);
+        }
+    });
+
+    var parentEl = document.getElementById('sbi_images');
+    itemArray.forEach(function(item) {
+        parentEl.appendChild(item);
+    });
+}
+
 function initInstagram()
 {
     // Used to track multiple feeds on the page
@@ -154,19 +175,9 @@ function initInstagram()
                         photo.innerHTML += '<i class="sbi_playbtn"></i>';
                     }
                 }
-                // Sort posts by date
-                // only sort the new posts that are loaded in, not the whole feed, otherwise some photos will switch positions due to dates
-                $self.find('#sbi_images .sbi_item').sort(function (a, b) {
-                    var aComp = parseInt(a.dataset.date, 10);
-                    var bComp = parseInt(b.dataset.date, 10);
 
-                    if (sortby === 'date' || sortby === 'none') { // 'none' for backwards compatibility
-                        return bComp - aComp;
-                    } else {
-                        // Randomize
-                        return (Math.round(Math.random()) - 0.5);
-                    }
-                }).appendTo($self.find('#sbi_images'));
+                // Sort posts
+                sortImages(sortby);
             },
             error: function(sbiErrorResponse) {
                 var error;
