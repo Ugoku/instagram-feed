@@ -1,4 +1,4 @@
-function generateHeader(data, feedOptions)
+function headerHTML(data, feedOptions)
 {
     var html = '';
     html += '<a href="https://instagram.com/' + data.data.username + '" target="_blank" title="@' + data.data.username + '" class="sbi_header_link">';
@@ -71,6 +71,27 @@ function filterImage(image)
     return true;
 }
 
+function generateHeader(userID, accessToken, feedOptions)
+{
+    var sbi_page_url = 'https://api.instagram.com/v1/users/' + userID + '?access_token=' + accessToken;
+
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', sbi_page_url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState !== 4) {
+            return;
+        }
+        var data = JSON.parse(ajax.responseText);
+        var sbiErrorResponse = data.meta.error_message;
+        if (typeof sbiErrorResponse === 'undefined') {
+            var igEl = document.getElementById('sb_instagram');
+            var innerHtml = igEl.innerHTML;
+            igEl.innerHTML = headerHTML(data, feedOptions) + innerHtml;
+        }
+    };
+    ajax.send(null);
+}
+
 function getTemplateString()
 {
     var templateString = '<div class="sbi_item sbi_type_{{model.type}}" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
@@ -89,7 +110,6 @@ function initInstagram()
 
     var thisEl = document.getElementById('sb_instagram');
     var $self = jQuery('#sb_instagram');
-    var imgRes = 'standard_resolution';
     // Convert styles JSON string to an object
     var feedOptions = JSON.parse(thisEl.getAttribute('data-options'));
     var sortby = 'date';
@@ -98,27 +118,14 @@ function initInstagram()
         sortby = feedOptions.sortby;
     }
 
-    imgRes = getImageResolution(thisEl.getBoundingClientRect().width);
+    var imgRes = getImageResolution(thisEl.getBoundingClientRect().width);
 
     // Split comma separated hashtags into array
     var userIDs = thisEl.getAttribute('data-id').replace(/ /g, '').split(',');
 
-    // Get page info for first User ID
-    var sbi_page_url = 'https://api.instagram.com/v1/users/' + userIDs[0] + '?access_token=' + instagramAccessToken;
-
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET', sbi_page_url, true);
-    ajax.onreadystatechange = function() {
-        if (ajax.readyState !== 4) {
-            return;
-        }
-        var data = JSON.parse(ajax.responseText);
-        var sbiErrorResponse = data.meta.error_message;
-        if (typeof sbiErrorResponse === 'undefined') {
-            $self.find('.sb_instagram_header').prepend(generateHeader(data, feedOptions));
-        }
-    };
-    ajax.send(null);
+    if (document.querySelector('.sb_instagram_header')) {
+        generateHeader(userIDs[0], instagramAccessToken, feedOptions);
+    }
 
     // Loop through User IDs
     userIDs.forEach(function(userID) {
