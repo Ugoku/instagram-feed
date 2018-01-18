@@ -130,7 +130,6 @@ function initInstagram()
     window.sbiFeedMeta = {};
 
     var thisEl = document.getElementById('sb_instagram');
-    var $self = jQuery('#sb_instagram');
     // Convert styles JSON string to an object
     var feedOptions = JSON.parse(thisEl.getAttribute('data-options'));
     var sortby = 'date';
@@ -181,29 +180,37 @@ function initInstagram()
             },
             error: function(sbiErrorResponse) {
                 var error;
+                var errorNode;
+
                 if (sbiErrorResponse.indexOf('access_token') > -1) {
                     var sbiErrorMsg = '<p><b>Error: Access Token is not valid or has expired</b><br><span>This error message is only visible to WordPress admins</span>';
                     var sbiErrorDir = "<p>There's an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin's Settings page.<br>If you continue to have an issue with your Access Token then please see <a href='https://smashballoon.com/my-instagram-access-token-keep-expiring/' target='_blank'>this FAQ</a> for more information.";
                     document.getElementById('sb_instagram').innerHTML = '<p style="text-align: center;">Unable to show Instagram photos</p><div id="sbi_mod_error">' + sbiErrorMsg + sbiErrorDir + '</div>';
                 } else if (sbiErrorResponse.indexOf('user does not exist') > -1 || sbiErrorResponse.indexOf('you cannot view this resource') > -1) {
                     error = {
-                        msg: '<p><b>Error: User ID <span class="sbiErrorIds">' + userID + '</span> does not exist, is invalid, or is private</b><br><span>This error is only visible to WordPress admins</span>',
+                        msg: '<p><b>Error: User ID <span id="sbiErrorIds">' + userID + '</span> does not exist, is invalid, or is private</b><br><span>This error is only visible to WordPress admins</span>',
                         dir: "<p>Please double check the Instagram User ID that you are using and ensure that it is valid and not from a private account. To find your User ID simply enter your Instagram user name into this <a href='https://smashballoon.com/instagram-feed/find-instagram-user-id/' target='_blank'>tool</a>.</p>"
                     };
-                    if (!$self.find('#sbi_mod_error').length) {
-                        $self.prepend('<div id="sbi_mod_error">' + error.msg + error.dir + '</div>');
-                    } else if ($self.find('.sbiErrorIds').text().indexOf(userID) === -1) {
-                        $self.find('.sbiErrorIds').append(',' + userID);
+                    if (!document.getElementById('sbi_mod_error')) {
+                        errorNode = document.createElement('div');
+                        errorNode.id = 'sbi_mod_error';
+                        errorNode.innerHTML = error.msg + error.dir;
+                        thisEl.insertBefore(errorNode, document.getElementById('sbi_images'));
+                    } else if (document.getElementById('sbiErrorIds').innerText.indexOf(userID) === -1) {
+                        document.getElementById('sbiErrorIds').innerText += ',' + userID;
                     }
                 } else if (sbiErrorResponse.indexOf('No images were returned') > -1) {
                     error = {
-                        msg: '<p><b>Error: User ID <span class="sbiErrorNone">' + userID + '</span> has no posts</b><br><span>This error is only visible to WordPress admins</span>',
+                        msg: '<p><b>Error: User ID <span id="sbiErrorNone">' + userID + '</span> has no posts</b><br><span>This error is only visible to WordPress admins</span>',
                         dir: "<p>If you are the owner of this account, make a post on Instagram to see it in your feed.</p>"
                     };
-                    if (!$self.find('#sbi_mod_error.sbi_error_none').length) {
-                        $self.prepend('<div id="sbi_mod_error" class="sbi_error_none">' + error.msg + error.dir + '</div>');
-                    } else if ($self.find('.sbiErrorNone').text().indexOf(userID) === -1) {
-                        $self.find('.sbiErrorNone').append(',' + userID);
+                    if (!document.getElementById('sbi_mod_error')) {
+                        errorNode = document.createElement('div');
+                        errorNode.id = 'sbi_mod_error';
+                        errorNode.innerHTML = error.msg + error.dir;
+                        thisEl.insertBefore(errorNode, document.getElementById('sbi_images'));
+                    } else if (document.getElementById('sbiErrorNone').innerText.indexOf(userID) === -1) {
+                        document.getElementById('sbiErrorNone').innerText += ',' + userID;
                     }
                 }
             }

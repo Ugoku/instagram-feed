@@ -141,7 +141,7 @@ function sb_instagram_scripts_enqueue()
 {
     //Register the script to make it available
     wp_register_script('instagram-feed', plugins_url('/js/instagramfeed.js', __FILE__), [], '20171123', true);
-    wp_register_script('sb_instagram_scripts', plugins_url('/js/sb-instagram.js', __FILE__), ['jquery', 'instagram-feed'], SBIVER, true);
+    wp_register_script('sb_instagram_scripts', plugins_url('/js/sb-instagram.js', __FILE__), ['instagram-feed'], SBIVER, true);
 
     //Options to pass to JS file
     $sb_instagram_settings = get_option('sb_instagram_settings');
