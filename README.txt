@@ -79,7 +79,7 @@ See the table below for a full list of available shortcode options:
 * **class** - Add a CSS class to the Instagram feed container - Example: `[instagram-feed class=feedOne]`
 *
 * **Photo Options**
-* **sortby** - Sort the Instagram posts by Newest to Oldest (none) or Random (random) - Example: `[instagram-feed sortby=random]`
+* **sortby** - Sort the Instagram posts by Newest to Oldest (date) or Random (random) - Example: `[instagram-feed sortby=random]`
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
 *
@@ -195,7 +195,7 @@ The below options are available on the Instagram Feed Settings page but can also
 * **class** - Add a CSS class to the Instagram feed container - Example: `[instagram-feed class=feedOne]`
 *
 * **Photo Options**
-* **sortby** - Sort the Instagram posts by Newest to Oldest (none) or Random (random) - Example: `[instagram-feed sortby=random]`
+* **sortby** - Sort the Instagram posts by Newest to Oldest (date) or Random (random) - Example: `[instagram-feed sortby=random]`
 * **num** - The number of Instagram posts to display initially. Maximum is 33 - Example: `[instagram-feed num=10]`
 
 * **Header Options**

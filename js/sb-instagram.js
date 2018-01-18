@@ -140,23 +140,23 @@ function initInstagram()
                 $self.find('.sbi_loader').remove();
 
                 // Add video icon to videos
-                jQuery('#sb_instagram .sbi_photo').each(function() {
-                    $sbi_photo = jQuery(this);
-
-                    if ($sbi_photo.closest('.sbi_item').hasClass('sbi_type_video')) {
-                        if (!$sbi_photo.find('.sbi_playbtn').length) {
-                            $sbi_photo.append('<i class="fa fa-play sbi_playbtn"></i>');
-                        }
+                var photos = document.querySelectorAll('#sb_instagram .sbi_photo');
+                for (var i = 0; i < photos.length; i++) {
+                    var photo = photos[i];
+                    if (!photo.parentNode.parentNode.classList.contains('sbi_type_video')) {
+                        continue;
                     }
-                });
-
+                    if (!photo.querySelector('.sbi_playbtn')) {
+                        photo.innerHTML += '<i class="sbi_playbtn"></i>';
+                    }
+                }
                 // Sort posts by date
                 // only sort the new posts that are loaded in, not the whole feed, otherwise some photos will switch positions due to dates
                 $self.find('#sbi_images .sbi_item').sort(function (a, b) {
                     var aComp = parseInt(a.dataset.date, 10);
                     var bComp = parseInt(b.dataset.date, 10);
 
-                    if (sortby === 'date') {
+                    if (sortby === 'date' || sortby === 'none') { // 'none' for backwards compatibility
                         return bComp - aComp;
                     } else {
                         // Randomize
@@ -165,27 +165,28 @@ function initInstagram()
                 }).appendTo($self.find('#sbi_images'));
             },
             error: function(sbiErrorResponse) {
+                var error;
                 if (sbiErrorResponse.indexOf('access_token') > -1) {
-                    var sbiErrorMsg = '<p><b>Error: Access Token is not valid or has expired</b><br /><span>This error message is only visible to WordPress admins</span>';
+                    var sbiErrorMsg = '<p><b>Error: Access Token is not valid or has expired</b><br><span>This error message is only visible to WordPress admins</span>';
                     var sbiErrorDir = "<p>There's an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin's Settings page.<br>If you continue to have an issue with your Access Token then please see <a href='https://smashballoon.com/my-instagram-access-token-keep-expiring/' target='_blank'>this FAQ</a> for more information.";
-                    jQuery('#sb_instagram').empty().append('<p style="text-align: center;">Unable to show Instagram photos</p><div id="sbi_mod_error">' + sbiErrorMsg + sbiErrorDir + '</div>');
+                    document.getElementById('sb_instagram').innerHTML = '<p style="text-align: center;">Unable to show Instagram photos</p><div id="sbi_mod_error">' + sbiErrorMsg + sbiErrorDir + '</div>';
                 } else if (sbiErrorResponse.indexOf('user does not exist') > -1 || sbiErrorResponse.indexOf('you cannot view this resource') > -1) {
-                    window.sbiFeedMeta = {
-                        errorMsg    : '<p><b>Error: User ID <span class="sbiErrorIds">' + userID + '</span> does not exist, is invalid, or is private</b><br /><span>This error is only visible to WordPress admins</span>',
-                        errorDir    : "<p>Please double check the Instagram User ID that you are using and ensure that it is valid and not from a private account. To find your User ID simply enter your Instagram user name into this <a href='https://smashballoon.com/instagram-feed/find-instagram-user-id/' target='_blank'>tool</a>.</p>"
+                    error = {
+                        msg: '<p><b>Error: User ID <span class="sbiErrorIds">' + userID + '</span> does not exist, is invalid, or is private</b><br><span>This error is only visible to WordPress admins</span>',
+                        dir: "<p>Please double check the Instagram User ID that you are using and ensure that it is valid and not from a private account. To find your User ID simply enter your Instagram user name into this <a href='https://smashballoon.com/instagram-feed/find-instagram-user-id/' target='_blank'>tool</a>.</p>"
                     };
                     if (!$self.find('#sbi_mod_error').length) {
-                        $self.prepend('<div id="sbi_mod_error">'+window.sbiFeedMeta.errorMsg+window.sbiFeedMeta.errorDir+'</div>');
+                        $self.prepend('<div id="sbi_mod_error">' + error.msg + error.dir + '</div>');
                     } else if ($self.find('.sbiErrorIds').text().indexOf(userID) === -1) {
                         $self.find('.sbiErrorIds').append(',' + userID);
                     }
                 } else if (sbiErrorResponse.indexOf('No images were returned') > -1) {
-                    window.sbiFeedMeta = {
-                        errorMsg    : '<p><b>Error: User ID <span class="sbiErrorNone">' + userID + '</span> has no posts</b><br /><span>This error is only visible to WordPress admins</span>',
-                        errorDir    : "<p>If you are the owner of this account, make a post on Instagram to see it in your feed.</p>"
+                    error = {
+                        msg: '<p><b>Error: User ID <span class="sbiErrorNone">' + userID + '</span> has no posts</b><br><span>This error is only visible to WordPress admins</span>',
+                        dir: "<p>If you are the owner of this account, make a post on Instagram to see it in your feed.</p>"
                     };
                     if (!$self.find('#sbi_mod_error.sbi_error_none').length) {
-                        $self.prepend('<div id="sbi_mod_error" class="sbi_error_none">'+window.sbiFeedMeta.errorMsg+window.sbiFeedMeta.errorDir+'</div>');
+                        $self.prepend('<div id="sbi_mod_error" class="sbi_error_none">' + error.msg + error.dir + '</div>');
                     } else if ($self.find('.sbiErrorNone').text().indexOf(userID) === -1) {
                         $self.find('.sbiErrorNone').append(',' + userID);
                     }
@@ -194,7 +195,6 @@ function initInstagram()
         });
 
         userFeed.run();
-
     });
 }
 

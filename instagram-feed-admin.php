@@ -36,7 +36,7 @@ function sb_instagram_settings_page()
         'sb_instagram_user_id' => '',
         'sb_instagram_preserve_settings' => '',
         'sb_instagram_num' => '12',
-        'sb_instagram_sort' => 'none',
+        'sb_instagram_sort' => 'date',
         'sb_instagram_show_header' => true,
     ];
     //Save defaults in an array
@@ -216,7 +216,7 @@ function sb_instagram_settings_page()
                         Eg: sortby=random</code></th>
                     <td>
                         <select name="sb_instagram_sort">
-                            <option value="none" <?php if ($sb_instagram_sort == "none") echo 'selected="selected"' ?> ><?php _e('Newest to oldest', 'instagram-feed'); ?></option>
+                            <option value="date" <?php if ($sb_instagram_sort == "date") echo 'selected="selected"' ?> ><?php _e('Newest to oldest', 'instagram-feed'); ?></option>
                             <option value="random" <?php if ($sb_instagram_sort == "random") echo 'selected="selected"' ?> ><?php _e('Random', 'instagram-feed'); ?></option>
                         </select>
                     </td>
@@ -302,7 +302,7 @@ function sb_instagram_settings_page()
                 <tr class="sbi_table_header"><td colspan=3><?php _e("Photos Options", 'instagram-feed'); ?></td></tr>
                 <tr>
                     <td>sortby</td>
-                    <td><?php _e("Sort the posts by Newest to Oldest (none) or Random (random)", 'instagram-feed'); ?></td>
+                    <td><?php _e("Sort the posts by Newest to Oldest (date) or Random (random)", 'instagram-feed'); ?></td>
                     <td><code>[instagram-feed sortby=random]</code></td>
                 </tr>
                 <tr>
