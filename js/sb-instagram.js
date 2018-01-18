@@ -109,7 +109,7 @@ function initInstagram()
     var ids_arr = user_id.replace(/ /g, '').split(',');
 
     // Get page info for first User ID
-    var sbi_page_url = 'https://api.instagram.com/v1/users/' + ids_arr[0] + '?access_token=' + sb_instagram_js_options.sb_instagram_at;
+    var sbi_page_url = 'https://api.instagram.com/v1/users/' + ids_arr[0] + '?access_token=' + instagramAccessToken;
 
     jQuery.ajax({
         method: 'GET',
@@ -134,7 +134,7 @@ function initInstagram()
             template: getTemplateString(),
             filter: filterImage,
             userId: parseInt(userID, 10),
-            accessToken: sb_instagram_js_options.sb_instagram_at,
+            accessToken: instagramAccessToken,
             after: function() {
                 $self.find('.sbi_loader').remove();
 

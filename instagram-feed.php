@@ -118,6 +118,15 @@ function display_instagram($atts, $content = null)
 //Allows shortcodes in theme
 add_filter('widget_text', 'do_shortcode');
 
+// Adapted from https://gist.github.com/toscho/1584783
+add_filter('clean_url', function($url) {
+    if (strpos($url, 'css/sb-instagram.css') === false) {
+        return $url;
+    }
+    // Must be a ', not "!
+    return $url . "' defer='defer";
+}, 11, 1);
+
 //Enqueue stylesheet
 add_action('wp_enqueue_scripts', 'sb_instagram_styles_enqueue');
 function sb_instagram_styles_enqueue()
@@ -138,17 +147,13 @@ function sb_instagram_scripts_enqueue()
     $sb_instagram_settings = get_option('sb_instagram_settings');
 
     //Access token
-    $sb_instagram_at = isset($sb_instagram_settings['sb_instagram_at']) ? trim($sb_instagram_settings['sb_instagram_at']) : '';
-
-    $data = [
-        'sb_instagram_at' => $sb_instagram_at
-    ];
+    $accessToken = isset($sb_instagram_settings['sb_instagram_at']) ? trim($sb_instagram_settings['sb_instagram_at']) : '';
 
     //Enqueue it to load it onto the page
     wp_enqueue_script('sb_instagram_scripts');
 
     //Pass option to JS file
-    wp_localize_script('sb_instagram_scripts', 'sb_instagram_js_options', $data);
+    wp_localize_script('sb_instagram_scripts', 'instagramAccessToken', $accessToken);
 }
 
 //Custom CSS
