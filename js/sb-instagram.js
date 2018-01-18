@@ -29,10 +29,10 @@ function getImageResolution(feedWidth)
     if (sbiWindowWidth < 640) {
         // Need this for mobile so that image res is right on mobile, as the number of cols isn't always accurate on mobile as they are changed using CSS
         if ((feedWidth > 320 && feedWidth < 480) && sbiWindowWidth < 480) {
-            colWidth = 480; //Use full size images
+            colWidth = 480; // Use full size images
         }
         if (feedWidth < 320 && sbiWindowWidth < 480) {
-            colWidth = 300; //Use medium size images
+            colWidth = 300; // Use medium size images
         }
     }
 
@@ -43,7 +43,7 @@ function getImageResolution(feedWidth)
         imgRes = 'low_resolution';
     }
 
-    //If the feed is hidden (eg; in a tab) then the width is returned as 100, and so auto set the res to be medium to cover most bases
+    // If the feed is hidden (eg; in a tab) then the width is returned as 100, and so auto set the res to be medium to cover most bases
     if (feedWidth <= 100) {
         imgRes = 'low_resolution';
     }
@@ -53,7 +53,7 @@ function getImageResolution(feedWidth)
 
 function filterImage(image)
 {
-    //Create time for sorting
+    // Create time for sorting
     var date = new Date(image.created_time * 1000);
     image.created_time_raw = date.getTime();
 
@@ -63,7 +63,7 @@ function filterImage(image)
         image.caption.text = image.caption.text.replace(/"/g, '\\"');
     }
 
-    //Remove caching key from image sources to prevent duplicate content issue
+    // Remove caching key from image sources to prevent duplicate content issue
     image.images.thumbnail.url = image.images.thumbnail.url.split('?ig_cache_key')[0];
     image.images.standard_resolution.url = image.images.standard_resolution.url.split('?ig_cache_key')[0];
     image.images.low_resolution.url = image.images.low_resolution.url.split('?ig_cache_key')[0];
@@ -73,7 +73,7 @@ function filterImage(image)
 
 function getTemplateString()
 {
-    var templateString = '<div class="sbi_item sbi_type_{{model.type}} sbi_new" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
+    var templateString = '<div class="sbi_item sbi_type_{{model.type}}" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
     templateString += '<figure class="sbi_photo_wrap">';
     templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200">';
     templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption></a>';
@@ -94,10 +94,9 @@ function initInstagram()
     // Convert styles JSON string to an object
     var feedOptions = JSON.parse(thisEl.getAttribute('data-options'));
     var getType = 'user';
-    var sortby = 'none';
+    var sortby = 'date';
     var user_id = thisEl.getAttribute('data-id');
     var num = thisEl.getAttribute('data-num');
-    var morePosts = []; //Used to determine whether to show the Load More button when displaying posts from more than one id/hashtag. If one of the ids/hashtags has more posts then still show button.
 
     if (feedOptions.sortby !== '') {
         sortby = feedOptions.sortby;
@@ -106,25 +105,27 @@ function initInstagram()
     imgRes = getImageResolution($self.innerWidth());
 
     // Split comma separated hashtags into array
-    var ids_arr = user_id.replace(/ /g, '').split(',');
+    var userIDs = user_id.replace(/ /g, '').split(',');
 
     // Get page info for first User ID
-    var sbi_page_url = 'https://api.instagram.com/v1/users/' + ids_arr[0] + '?access_token=' + instagramAccessToken;
+    var sbi_page_url = 'https://api.instagram.com/v1/users/' + userIDs[0] + '?access_token=' + instagramAccessToken;
 
-    jQuery.ajax({
-        method: 'GET',
-        url: sbi_page_url,
-        dataType: 'jsonp',
-        success: function(data) {
-            var sbiErrorResponse = data.meta.error_message;
-            if (typeof sbiErrorResponse === 'undefined') {
-                $self.find('.sb_instagram_header').prepend(generateHeader(data, feedOptions));
-            }
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', sbi_page_url, true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState !== 4) {
+            return;
         }
-    });
+        var data = JSON.parse(ajax.responseText);
+        var sbiErrorResponse = data.meta.error_message;
+        if (typeof sbiErrorResponse === 'undefined') {
+            $self.find('.sb_instagram_header').prepend(generateHeader(data, feedOptions));
+        }
+    };
+    ajax.send(null);
 
-    //Loop through User IDs
-    jQuery.each(ids_arr, function(index, userID) {
+    // Loop through User IDs
+    userIDs.forEach(function(userID) {
         var userFeed = new instagramfeed({
             target: $target,
             get: getType,
@@ -137,11 +138,6 @@ function initInstagram()
             accessToken: instagramAccessToken,
             after: function() {
                 $self.find('.sbi_loader').remove();
-
-                /* Load more button */
-                if (this.hasNext()) {
-                    morePosts.push('1');
-                }
 
                 // Add video icon to videos
                 jQuery('#sb_instagram .sbi_photo').each(function() {
@@ -156,26 +152,18 @@ function initInstagram()
 
                 // Sort posts by date
                 // only sort the new posts that are loaded in, not the whole feed, otherwise some photos will switch positions due to dates
-                $self.find('#sbi_images .sbi_item.sbi_new').sort(function (a, b) {
-                    var aComp = jQuery(a).data('date'),
-                        bComp = jQuery(b).data('date');
+                $self.find('#sbi_images .sbi_item').sort(function (a, b) {
+                    var aComp = parseInt(a.dataset.date, 10);
+                    var bComp = parseInt(b.dataset.date, 10);
 
-                    if (sortby === 'none') {
-                        //Order by date
+                    if (sortby === 'date') {
                         return bComp - aComp;
                     } else {
-                        //Randomize
+                        // Randomize
                         return (Math.round(Math.random()) - 0.5);
                     }
                 }).appendTo($self.find('#sbi_images'));
-
-                //Remove the new class after 500ms, once the sorting is done
-                setTimeout(function() {
-                    jQuery('#sbi_images .sbi_item.sbi_new').removeClass('sbi_new');
-                    // Reset the morePosts variable so we can check whether there are more posts every time the Load More button is clicked
-                    morePosts = [];
-                }, 500);
-            }, // End 'after' function
+            },
             error: function(sbiErrorResponse) {
                 if (sbiErrorResponse.indexOf('access_token') > -1) {
                     var sbiErrorMsg = '<p><b>Error: Access Token is not valid or has expired</b><br /><span>This error message is only visible to WordPress admins</span>';
@@ -207,7 +195,7 @@ function initInstagram()
 
         userFeed.run();
 
-    }); //End User ID array loop
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
