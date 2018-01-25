@@ -96,7 +96,8 @@ function getTemplateString()
 {
     var templateString = '<div class="sbi_item sbi_type_{{model.type}}" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
     templateString += '<figure class="sbi_photo_wrap">';
-    templateString += '<a class="sbi_photo" href="{{link}}" target="_blank"><img src="{{image}}" alt="{{caption}}" width="200" height="200">';
+    templateString += '<a class="sbi_photo" href="{{link}}" target="_blank">';
+    templateString += '<img src="{{image}}" srcset="{{srcset}}" alt="{{caption}}" width="200" height="200" sizes="(max-width: 640px) 50vw, 25vw">';
     templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption></a>';
     templateString += '</figure></div>';
 
@@ -149,7 +150,7 @@ function initInstagram()
 
     // Loop through User IDs
     userIDs.forEach(function(userID) {
-        var userFeed = new instagramfeed({
+        var userFeed = new Instafeed({
             target: thisEl.querySelector('#sbi_images'),
             get: 'user',
             sortBy: sortby,
