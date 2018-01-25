@@ -97,7 +97,7 @@ function getTemplateString()
     var templateString = '<div class="sbi_item sbi_type_{{model.type}}" id="sbi_{{id}}" data-date="{{model.created_time_raw}}">';
     templateString += '<figure class="sbi_photo_wrap">';
     templateString += '<a class="sbi_photo" href="{{link}}" target="_blank">';
-    templateString += '<img src="{{image}}" srcset="{{srcset}}" alt="{{caption}}" width="200" height="200" sizes="(max-width: 640px) 50vw, 25vw">';
+    templateString += '<img src="{{image}}" srcset="{{srcset}}" alt="{{caption}}" width="200" height="200" sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 17vw">';
     templateString += '<figcaption><div class="sbi_username">{{model.user.username}}</div><div>{{caption}}</div></figcaption></a>';
     templateString += '</figure></div>';
 
